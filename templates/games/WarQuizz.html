@@ -45,8 +45,6 @@
             </div>
         </div>
     </div>
-    <script src="./jquery/jquery.min.js"></script>
-    <script src="./bootstrap/js/bootstrap.min.js"></script>
 
     <div class="container mt-5">
         <div class="row">
@@ -56,16 +54,15 @@
                     <div class="card-body">
 
                         <form method="POST" id="form">
-
                             <div class="mb-3">
+
                                 <label for="username" class="form-label">Nom d'utilisteur</label>
                                 <input type="text" class="form-control" id="username" minlength="2" maxlength="20"
                                     placeholder="Saisir votre nom d'utilisateur" required>
                             </div>
-
                             <button class="btn btn-primary" id="start" type="submit">Créer un salon privée</button>
-
                         </form>
+
                     </div>
                 </div>
 
@@ -74,7 +71,7 @@
                     <ul class="list-group list-group-flush" id="rooms-list"></ul>
                 </div>
 
-                <div class="d-none" id="waiting-aera">
+                <div class="d-none" id="waiting-area">
 
                     <div class="card mb-3">
                         <div class="card-header">En attente d'un autre joueur</div>
@@ -98,7 +95,10 @@
         </div>
     </div>
 
-    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="/jquery/jquery.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/index.js"></script>
 </body>
 
 </html>
