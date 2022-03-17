@@ -32,15 +32,12 @@ http.listen(port, () => {
 let rooms = [];
 
 io.on('connection', (socket) => {
-    console.log(`[connection] ${socket.id}`);
 
     socket.on('playerData', (player) => {
-        console.log(`[playerData] ${player.username}`);
         let room = null;
 
         if(!player.roomId) {
             room = createRoom(player);
-            console.log(`[create room] - ${room.id} - ${player.username}`);
         } else{
             room = rooms.find(r => r.id === player.roomId);
 
@@ -55,12 +52,19 @@ io.on('connection', (socket) => {
         io.to(socket.id).emit('join room', room.id);
 
         if (room.players.length >= 2){
-
+            io.to(room.id).emit('start game', room.players);
         }
+        
+        console.log(player);
+        return player;
+    });
 
-        socket.on('get rooms', () => {
-            io.to(socket.id).emit('list rooms', rooms);
-        });
+    socket.on('get rooms', () => {
+        io.to(socket.id).emit('list rooms', rooms);
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`[disconnect] ${socket.id}`);
     });
 });
 
