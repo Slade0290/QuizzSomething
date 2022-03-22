@@ -1,6 +1,6 @@
 const { Socket } = require("socket.io");
 
-const express  = require('express');
+const express = require('express');
 
 const app = express();
 const http = require('http').createServer(app);
@@ -36,12 +36,12 @@ io.on('connection', (socket) => {
     socket.on('playerData', (player) => {
         let room = null;
 
-        if(!player.roomId) {
+        if (!player.roomId) {
             room = createRoom(player);
-        } else{
+        } else {
             room = rooms.find(r => r.id === player.roomId);
 
-            if(room === undefined){
+            if (room === undefined) {
                 return;
             }
 
@@ -51,12 +51,9 @@ io.on('connection', (socket) => {
         socket.join(room.id);
         io.to(socket.id).emit('join room', room.id);
 
-        if (room.players.length >= 2){
-            io.to(room.id).emit('start game', room.players);
+        if (room.players.length >= 2) {
+            io.to(room.id).emit('list players', room.players);
         }
-        
-        console.log(player);
-        return player;
     });
 
     socket.on('get rooms', () => {
@@ -65,11 +62,33 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log(`[disconnect] ${socket.id}`);
+
+        let room = null;
+        let player = null;
+        let index = 0;
+
+        //A REMPLACER PAR CODE PLUS OPTI
+        rooms.forEach(r => {
+            r.players.forEach(p => {
+                if (p.socketId === socket.id) {
+                    player = p;
+                    if (r.players.length <= 1) {
+                        room = r;
+                        rooms = rooms.filter(r => r !== room);
+                    } else if (p.host) {
+                        p.host = false;
+                        r.players[index + 1].host = true; //A CHANGER PARCE QUE FRAGILE (LODASH)
+                    }
+                    r.players = r.players.filter(p => p !== player);
+                }
+                index =+ 1;
+            })
+        })
     });
 });
 
 function createRoom(player) {
-    const room = {id : roomId(), players: []};
+    const room = { id: roomId(), players: [] };
 
     player.roomId = room.id;
     room.players.push(player);

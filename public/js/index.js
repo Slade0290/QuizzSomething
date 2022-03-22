@@ -15,8 +15,10 @@ const userCard = document.getElementById('user-card');
 const waitingArea = document.getElementById('waiting-area');
 
 const roomsCard = document.getElementById('rooms-card');
+const playersCard = document.getElementById('players-list');
 
 const roomsList = document.getElementById('rooms-list');
+const playersList = document.getElementById('players-list');
 
 socket.emit('get rooms');
 socket.on('list rooms', (rooms) => {
@@ -37,6 +39,20 @@ socket.on('list rooms', (rooms) => {
         roomsCard.classList.remove('d-none');
         roomsList.innerHTML = html;
     }
+
+    for (const element of document.getElementsByClassName("join-room")){
+        element.addEventListener('click', joinRoom, false);
+    }
+});
+
+socket.on('list players', (players) => {
+    let html = "";
+
+    if(players.length >= 2 ){
+        players.forEach(player => {
+            html += `<p class="p-0 m-0 flex-grow-1 fw-bold">Salon de ${player.username}</p>`;
+        });
+    }
 });
 
 
@@ -53,3 +69,16 @@ $("#form").on('submit', function (e) {
 
     socket.emit('playerData', player);
 })
+
+const joinRoom = function() {
+    if(usernameInput.value !== "") {
+        player.username = usernameInput.value;
+        player.socketId = socket.id;
+        player.roomId = this.dataset.room;
+
+        socket.emit('playerData', player);
+        userCard.hidden = true;
+        playersCard.classList.remove('d-none');
+        roomsCard.classList.add('d-none');
+    }
+}
