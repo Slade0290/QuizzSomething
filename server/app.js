@@ -12,17 +12,17 @@ const port = 8080;
 */
 const io = require('socket.io')(http);
 
-app.use('/bootstrap/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')));
-app.use('/bootstrap/js', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/js')));
-app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/bootstrap/css', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/css')));
+app.use('/bootstrap/js', express.static(path.join(__dirname, '../node_modules/bootstrap/dist/js')));
+app.use('/jquery', express.static(path.join(__dirname, '../node_modules/jquery/dist')));
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'templates/index.html'));
+    res.sendFile(path.join(__dirname, '../public/templates/index.html'));
 });
 
 app.get('/games/WarQuizz', (req, res) => {
-    res.sendFile(path.join(__dirname, 'templates/games/WarQuizz.html'));
+    res.sendFile(path.join(__dirname, '../public/templates/games/WarQuizz.html'));
 });
 
 http.listen(port, () => {
