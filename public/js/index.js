@@ -22,7 +22,6 @@ const playersList = document.getElementById('players-list');
 
 socket.emit('get rooms');
 socket.on('list rooms', (rooms) => {
-    console.log('trigger list rooms')
     let html = "";
 
     if (rooms.length > 0) {

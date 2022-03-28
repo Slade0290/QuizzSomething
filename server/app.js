@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('get rooms', () => {
-        io.emit('list rooms', rooms);
+        socket.emit('list rooms', rooms);
     });
 
     socket.on('get players', () => {
