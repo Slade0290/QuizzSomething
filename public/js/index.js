@@ -45,7 +45,11 @@ socket.on('list rooms', (rooms) => {
     }
 });
 
-
+socket.on('start quizz', (players) => {
+    for (const element of document.getElementsByClassName("start-quizz")) {
+        element.addEventListener('click', startGame, false);
+    }
+}); 
 
 $("#form").on('submit', function (e) {
     e.preventDefault();
@@ -89,3 +93,7 @@ const joinRoom = function () {
         roomsCard.classList.add('d-none');
     }
 }
+
+const startGame = function () {
+    console.log("JOUER");
+};

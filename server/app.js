@@ -52,6 +52,8 @@ io.on('connection', (socket) => {
 
         socket.join(room.id);
         io.to(socket.id).emit('join room', room.id);
+        
+        io.to(room.id).emit('start quizz', room.players);
     });
 
     socket.on('get rooms', () => {
@@ -84,8 +86,8 @@ io.on('connection', (socket) => {
                     r.players = r.players.filter(p => p !== player);
                 }
                 index =+ 1;
-            })
-        })
+            });
+        });
     });
 });
 
