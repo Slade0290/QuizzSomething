@@ -22,6 +22,7 @@ const playersList = document.getElementById('players-list');
 
 socket.emit('get rooms');
 socket.on('list rooms', (rooms) => {
+    console.log('trigger list rooms')
     let html = "";
 
     if (rooms.length > 0) {
@@ -56,7 +57,7 @@ $("#form").on('submit', function (e) {
 
     userCard.hidden = true;
     waitingArea.classList.remove('d-none');
-    roomsCard.classList.add('d-none');
+    roomsCard.classList.add('d-none');  
 
     socket.emit('playerData', player);
 })
