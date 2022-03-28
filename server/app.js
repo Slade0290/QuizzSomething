@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const http = require('http').createServer(app);
 const path = require('path');
+const { log } = require("console");
 const port = 8080;
 
 /** 
@@ -39,6 +40,7 @@ io.on('connection', (socket) => {
 
         if (!player.roomId) {
             room = createRoom(player);
+            socket.broadcast.emit('list rooms', rooms);
         } else {
             room = rooms.find(r => r.id === player.roomId);
 
@@ -57,7 +59,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('get rooms', () => {
-        io.to(socket.id).emit('list rooms', rooms);
+        socket.emit('list rooms', rooms);
     });
 
     socket.on('get players', () => {

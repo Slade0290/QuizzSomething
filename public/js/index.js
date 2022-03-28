@@ -60,7 +60,7 @@ $("#form").on('submit', function (e) {
 
     userCard.hidden = true;
     waitingArea.classList.remove('d-none');
-    roomsCard.classList.add('d-none');
+    roomsCard.classList.add('d-none');  
 
     socket.emit('playerData', player);
 })
