@@ -30,6 +30,7 @@ http.listen(port, () => {
 });
 
 let rooms = [];
+let players = [];
 
 io.on('connection', (socket) => {
 
@@ -46,19 +47,20 @@ io.on('connection', (socket) => {
             }
 
             room.players.push(player);
+            players = room.players; 
         }
 
         socket.join(room.id);
         io.to(socket.id).emit('join room', room.id);
-
-        if (room.players.length >= 2) {
-            io.to(room.id).emit('list players', room.players);
-        }
     });
 
     socket.on('get rooms', () => {
         io.to(socket.id).emit('list rooms', rooms);
     });
+
+    socket.on('get players', () => {
+        io.to(socket.id).emit('list players', players);
+    })
 
     socket.on('disconnect', () => {
         console.log(`[disconnect] ${socket.id}`);
