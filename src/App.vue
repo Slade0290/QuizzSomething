@@ -1,23 +1,17 @@
 <template>
   <div id="app">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-6 offset-md-3">
-          <Chat />
-        </div>
-      </div>
-    </div>
+    <WaitingRoom />
   </div>
 </template>
 
 <script>
-import Chat from './components/Chat.vue'
+import WaitingRoom from './components/WaitingRoom.vue'
 
 export default {
   name: 'app',
   components: {
-    Chat
-  }
+    WaitingRoom
+}
 }
 </script>
 

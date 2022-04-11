@@ -727,6 +727,7 @@
   "version" "3.0.0-beta.6"
 
 "@vue/cli-plugin-babel@^3.0.0-beta.6":
+  "integrity" "sha1-S4uIfyFRosUFrbDdsuoUWjstYPM="
   "resolved" "https://registry.npmjs.org/@vue/cli-plugin-babel/-/cli-plugin-babel-3.0.0-beta.6.tgz"
   "version" "3.0.0-beta.6"
   dependencies:
@@ -735,6 +736,7 @@
     "babel-loader" "^8.0.0-0"
 
 "@vue/cli-service@^3.0.0-beta.6":
+  "integrity" "sha1-sim1/Txdsz8N+YJPC5nKCB+jjSA="
   "resolved" "https://registry.npmjs.org/@vue/cli-service/-/cli-service-3.0.0-beta.6.tgz"
   "version" "3.0.0-beta.6"
   dependencies:
@@ -6699,6 +6701,7 @@
   "version" "1.6.0"
 
 "vue@^2.5.13":
+  "integrity" "sha512-/ffmsiVuPC8PsWcFkZngdpas19ABm5mh2wA7iDqcltyCTwlgZjHGeJYOXkBMo422iPwIcviOtrTCUpSfXmToLQ=="
   "resolved" "https://registry.npmjs.org/vue/-/vue-2.5.16.tgz"
   "version" "2.5.16"
 
