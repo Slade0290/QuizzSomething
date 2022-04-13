@@ -2,19 +2,20 @@
   <section>
     <div class="create-room">
       <div class="mb-3">
-        <label id="username" ref="username" class="form-label"
+        <label for="username" class="form-label"
           >Nom d'utilisteur</label
         >
         <input
           type="text"
           class="form-control"
+          ref="username"
           id="username"
           minlength="2"
           maxlength="20"
           placeholder="Saisir votre nom d'utilisateur"
           required
         />
-        <button v-on:click="create">Créer un salon privée</button>
+        <button v-on:click="submit">Créer un salon privée</button>
       </div>
       <div class="rooms-list">
         <h3>Liste des salons</h3>
@@ -65,10 +66,10 @@ export default {
     });
   },
   methods: {
-    create: function (event) {
-      this.player.username = this.$refs.username;
+    submit: function (event) {
+      this.player.username = this.$refs.username.value;
       this.player.host = true;
-      this.player.socketId = this.socket.socketId;
+      this.player.socketId = this.socket.id;
       this.socket.emit("playerData", this.player);
     },
   },
