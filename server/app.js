@@ -47,6 +47,11 @@ io.on('connection', function(socket) {
     socket.on('GET:PLAYERS', () => {
         socket.emit('LIST:PLAYERS', players)
     });
+
+    socket.on("START:QUIZ", (socketId) => {
+        console.log("Start quiz !")
+        console.log(socketId)
+    })
 });
 
 function createRoom(player) {
