@@ -19,7 +19,8 @@ io.on('connection', function(socket) {
 
         if (!player.roomId) {
             room = createRoom(player);
-            socket.broadcast.emit('list rooms', rooms);
+            socket.emit('ROOM:CREATED', room.id)
+            socket.broadcast.emit('LIST:ROOMS', rooms);
         } else {
             room = rooms.find(r => r.id === player.roomId);
 
@@ -28,13 +29,13 @@ io.on('connection', function(socket) {
             }
 
             room.players.push(player);
-            players = room.players; 
+            players = room.players;
+            console.log(`players : ${players}`)
         }
 
-        //socket.join(room.id);
+        socket.join(room.id);
         io.to(socket.id).emit('join room', room.id);
         console.log(room.id);
-        
         //io.to(room.id).emit('start quizz', room.players);
     });
 
@@ -44,8 +45,10 @@ io.on('connection', function(socket) {
     });
 
     // LIST PLAYERS
-    socket.on('GET:PLAYERS', () => {
-        socket.emit('LIST:PLAYERS', players)
+    socket.on('GET:PLAYERS', (roomId) => {
+        let room = getRoomById(roomId)
+        console.log(`room.players ${room.players}`)
+        socket.emit('LIST:PLAYERS', room.players)
     });
 
     // JOIN ROOM
@@ -103,4 +106,8 @@ function createRoom(player) {
 
 function roomId() {
     return Math.random().toString(36).substring(2, 9);
+}
+
+function getRoomById(roomId) {
+    return rooms.findIndex(x => x.id === roomId)
 }

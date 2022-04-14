@@ -58,11 +58,9 @@ export default {
   },
   mounted() {
     this.roomList();
-    //this.playerList();
   },
   updated() {
     this.roomList();
-    //this.playerList();
   },
   methods: {
     submit: function (event) {
@@ -70,6 +68,10 @@ export default {
       this.player.host = true;
       this.player.socketId = this.socket.id;
       this.socket.emit("PLAYER:INFO", this.player);
+      this.socket.on('ROOM:CREATED', (roomId) => {
+        this.player.roomId = roomId
+        this.players.push(this.player)
+      })
     },
     start: function (event) {
       console.log('Start quiz !')
@@ -78,6 +80,7 @@ export default {
     join: function(roomId) {
       console.log(`Join room : ${roomId}`)
       this.socket.emit("JOIN:ROOM", this.player, roomId)
+      this.playerList()
     },
     roomList: function (event) {
       this.socket.emit("GET:ROOMS");
@@ -86,17 +89,15 @@ export default {
       });
     },
     playerList: function (event) {
-      this.socket.emit("GET:PLAYERS");
-      this.socket.on("LIST:PLAYERS", (players) => {
-        this.players = players;
-      });
+      console.log('In Player List')
+      console.log(this.player)
+      if(this.player.roomId) {
+        this.socket.emit("GET:PLAYERS", this.player.roomId);
+        this.socket.on("LIST:PLAYERS", (players) => {
+          this.players = players;
+        });
+      }
     },
   },
 };
 </script>
-
-<style>
-.players-list {
-  /*display: none;*/
-}
-</style>
