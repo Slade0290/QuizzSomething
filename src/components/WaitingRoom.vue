@@ -2,9 +2,7 @@
   <section>
     <div class="create-room">
       <div class="mb-3">
-        <label for="username" class="form-label"
-          >Nom d'utilisteur</label
-        >
+        <label for="username" class="form-label">Nom d'utilisteur</label>
         <input
           type="text"
           class="form-control"
@@ -59,21 +57,12 @@ export default {
     };
   },
   mounted() {
-    console.log(this.player.host)
-    this.socket.emit("GET:ROOMS");
-    this.socket.on("LIST:ROOMS", (rooms) => {
-      this.rooms = rooms;
-      console.log(rooms)
-    });
-    this.socket.emit("GET:PLAYERS");
-    this.socket.on("LIST:PLAYERS", (players) => {
-      this.players = players;
-    });
+    this.roomList();
+    //this.playerList();
   },
-  watch: {
-    rooms() {
-      console.log(this.rooms)
-    }
+  updated() {
+    this.roomList();
+    //this.playerList();
   },
   methods: {
     submit: function (event) {
@@ -89,7 +78,19 @@ export default {
     join: function(roomId) {
       console.log(`Join room : ${roomId}`)
       this.socket.emit("JOIN:ROOM", this.player, roomId)
-    }
+    },
+    roomList: function (event) {
+      this.socket.emit("GET:ROOMS");
+      this.socket.on("LIST:ROOMS", (rooms) => {
+        this.rooms = rooms;
+      });
+    },
+    playerList: function (event) {
+      this.socket.emit("GET:PLAYERS");
+      this.socket.on("LIST:PLAYERS", (players) => {
+        this.players = players;
+      });
+    },
   },
 };
 </script>
