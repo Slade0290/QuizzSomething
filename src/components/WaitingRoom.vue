@@ -58,29 +58,32 @@ export default {
   },
   mounted() {
     this.roomList();
+    this.socket.on("LIST:PLAYERS", (players) => {
+      this.players = players;
+    });
   },
   updated() {
     this.roomList();
   },
   methods: {
     submit: function (event) {
-      this.player.username = this.$refs.username.value;
+      this.playerData();
       this.player.host = true;
-      this.player.socketId = this.socket.id;
       this.socket.emit("PLAYER:INFO", this.player);
-      this.socket.on('ROOM:CREATED', (roomId) => {
-        this.player.roomId = roomId
-        this.players.push(this.player)
-      })
+      this.socket.on("ROOM:CREATED", (roomId) => {
+        this.player.roomId = roomId;
+        this.players.push(this.player);
+      });
     },
     start: function (event) {
-      console.log('Start quiz !')
-      this.socket.emit("START:QUIZ", this.player.socketId)
+      console.log("Start quiz !");
+      this.socket.emit("START:QUIZ", this.player.socketId);
     },
-    join: function(roomId) {
-      console.log(`Join room : ${roomId}`)
-      this.socket.emit("JOIN:ROOM", this.player, roomId)
-      this.playerList()
+    join: function (roomId) {
+      this.playerData();
+      this.player.roomId = roomId;
+      this.socket.emit("JOIN:ROOM", this.player, roomId);
+      this.playerList();
     },
     roomList: function (event) {
       this.socket.emit("GET:ROOMS");
@@ -89,14 +92,16 @@ export default {
       });
     },
     playerList: function (event) {
-      console.log('In Player List')
-      console.log(this.player)
-      if(this.player.roomId) {
-        this.socket.emit("GET:PLAYERS", this.player.roomId);
-        this.socket.on("LIST:PLAYERS", (players) => {
-          this.players = players;
-        });
-      }
+      console.log("In Player List");
+      console.log(this.player);
+      this.socket.emit("GET:PLAYERS", this.player.roomId);
+      this.socket.on("LIST:PLAYERS", (players) => {
+        this.players = players;
+      });
+    },
+    playerData: function (event) {
+      this.player.username = this.$refs.username.value;
+      this.player.socketId = this.socket.id;
     },
   },
 };

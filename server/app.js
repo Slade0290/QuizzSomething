@@ -3,39 +3,24 @@ const express = require('express');
 
 const app = express();
 
-const server = app.listen(3001, function() {
+const server = app.listen(3001, function () {
     console.log('server running on port 3001');
 });
 
 const io = require('socket.io')(server);
 
 let rooms = [];
-let players = [];
 
-io.on('connection', function(socket) {
+io.on('connection', function (socket) {
     console.log(socket.id)
     socket.on('PLAYER:INFO', (player) => {
         let room = null;
 
-        if (!player.roomId) {
-            room = createRoom(player);
-            socket.emit('ROOM:CREATED', room.id)
-            socket.broadcast.emit('LIST:ROOMS', rooms);
-        } else {
-            room = rooms.find(r => r.id === player.roomId);
-
-            if (room === undefined) {
-                return;
-            }
-
-            room.players.push(player);
-            players = room.players;
-            console.log(`players : ${players}`)
-        }
+        room = createRoom(player);
+        socket.emit('ROOM:CREATED', room.id)
+        socket.broadcast.emit('LIST:ROOMS', rooms);
 
         socket.join(room.id);
-        io.to(socket.id).emit('join room', room.id);
-        console.log(room.id);
         //io.to(room.id).emit('start quizz', room.players);
     });
 
@@ -48,17 +33,18 @@ io.on('connection', function(socket) {
     socket.on('GET:PLAYERS', (roomId) => {
         let room = getRoomById(roomId)
         console.log(`room.players ${room.players}`)
+        console.log(room);
         socket.emit('LIST:PLAYERS', room.players)
     });
 
     // JOIN ROOM
     socket.on("JOIN:ROOM", (player, roomId) => {
-        console.log("Join room")
-        console.log(player)
-        console.log(roomId)
-        // TODO : not done yet
+        let room = getRoomById(roomId);
+        room.players.push(player);
+        io.to(roomId).emit('LIST:PLAYERS', room.players)
+        socket.join(roomId);
     })
-    
+
     // START QUIZ
     socket.on("START:QUIZ", (socketId) => {
         console.log("Start quiz !")
@@ -88,7 +74,7 @@ io.on('connection', function(socket) {
                     }
                     r.players = r.players.filter(p => p !== player);
                 }
-                index =+ 1;
+                index = + 1;
             });
         });
     });
@@ -109,5 +95,5 @@ function roomId() {
 }
 
 function getRoomById(roomId) {
-    return rooms.findIndex(x => x.id === roomId)
+    return rooms.find(x => x.id === roomId)
 }
