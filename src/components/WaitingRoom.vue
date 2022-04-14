@@ -26,8 +26,8 @@
       <div class="players-list">
         <h3>Liste des joueurs</h3>
         <ul>
-          <li v-for="player in players" :key="player.message">
-            {{ player.message }}
+          <li v-for="player in players" :key="player.username">
+            {{ player.username }}
           </li>
         </ul>
       </div>
@@ -55,11 +55,11 @@ export default {
   },
   mounted() {
     this.roomList();
-    this.playerList();
+    //this.playerList();
   },
   updated() {
     this.roomList();
-    this.playerList();
+    //this.playerList();
   },
   methods: {
     submit: function (event) {

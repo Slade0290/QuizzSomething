@@ -9,8 +9,8 @@ const server = app.listen(3001, function() {
 
 const io = require('socket.io')(server);
 
-let rooms = [{message: "test room"}];
-let players = [{message: "test player"}];
+let rooms = [];
+let players = [];
 
 io.on('connection', function(socket) {
     console.log(socket.id)
@@ -46,6 +46,32 @@ io.on('connection', function(socket) {
     // LIST PLAYERS
     socket.on('GET:PLAYERS', () => {
         socket.emit('LIST:PLAYERS', players)
+    });
+
+    socket.on('disconnect', () => {
+        console.log(`[disconnect] ${socket.id}`);
+
+        let room = null;
+        let player = null;
+        let index = 0;
+
+        //A REMPLACER PAR CODE PLUS OPTI
+        rooms.forEach(r => {
+            r.players.forEach(p => {
+                if (p.socketId === socket.id) {
+                    player = p;
+                    if (r.players.length <= 1) {
+                        room = r;
+                        rooms = rooms.filter(r => r !== room);
+                    } else if (p.host) {
+                        p.host = false;
+                        r.players[index + 1].host = true; //A CHANGER PARCE QUE FRAGILE (LODASH)
+                    }
+                    r.players = r.players.filter(p => p !== player);
+                }
+                index =+ 1;
+            });
+        });
     });
 });
 
