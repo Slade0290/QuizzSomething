@@ -14,7 +14,7 @@ let players = [];
 
 io.on('connection', function(socket) {
     console.log(socket.id)
-    socket.on('playerData', (player) => {
+    socket.on('PLAYER:INFO', (player) => {
         let room = null;
 
         if (!player.roomId) {
@@ -48,10 +48,21 @@ io.on('connection', function(socket) {
         socket.emit('LIST:PLAYERS', players)
     });
 
+    // JOIN ROOM
+    socket.on("JOIN:ROOM", (player, roomId) => {
+        console.log("Join room")
+        console.log(player)
+        console.log(roomId)
+        // TODO : not done yet
+    })
+    
+    // START QUIZ
     socket.on("START:QUIZ", (socketId) => {
         console.log("Start quiz !")
         console.log(socketId)
+        // TODO : not done yet
     })
+
 });
 
 function createRoom(player) {

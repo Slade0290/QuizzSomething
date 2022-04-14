@@ -23,6 +23,7 @@
         <ul>
           <li v-for="room in rooms" :key="room.id">
             {{ room.id }}
+            <button v-on:click="join(room.id)">Join</button>
           </li>
         </ul>
       </div>
@@ -79,11 +80,15 @@ export default {
       this.player.username = this.$refs.username.value;
       this.player.host = true;
       this.player.socketId = this.socket.id;
-      this.socket.emit("playerData", this.player);
+      this.socket.emit("PLAYER:INFO", this.player);
     },
     start: function (event) {
       console.log('Start quiz !')
       this.socket.emit("START:QUIZ", this.player.socketId)
+    },
+    join: function(roomId) {
+      console.log(`Join room : ${roomId}`)
+      this.socket.emit("JOIN:ROOM", this.player, roomId)
     }
   },
 };
