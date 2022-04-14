@@ -13,7 +13,7 @@ let rooms = [];
 
 io.on('connection', function (socket) {
     console.log(socket.id)
-    socket.on('PLAYER:INFO', (player) => {
+    socket.on('CREATE:ROOM', (player) => {
         let room = null;
 
         room = createRoom(player);

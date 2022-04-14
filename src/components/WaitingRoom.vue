@@ -70,7 +70,7 @@ export default {
     submit: function (event) {
       this.playerData();
       this.player.host = true;
-      this.socket.emit("PLAYER:INFO", this.player);
+      this.socket.emit("CREATE:ROOM", this.player);
       this.socket.on("ROOM:CREATED", (roomId) => {
         this.player.roomId = roomId;
         this.players.push(this.player);
