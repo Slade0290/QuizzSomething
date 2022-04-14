@@ -9,8 +9,8 @@ const server = app.listen(3001, function() {
 
 const io = require('socket.io')(server);
 
-let rooms = [{message: "test room"}];
-let players = [{message: "test player"}];
+let rooms = [];
+let players = [];
 
 io.on('connection', function(socket) {
     console.log(socket.id)

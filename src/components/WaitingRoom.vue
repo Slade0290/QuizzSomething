@@ -17,19 +17,20 @@
         />
         <button v-on:click="submit">Créer un salon privée</button>
       </div>
-      <div class="rooms-list">
+      <div v-if="player.host">Waiting...</div>
+      <div v-else class="rooms-list">
         <h3>Liste des salons</h3>
         <ul>
-          <li v-for="room in rooms" :key="room.message">
-            {{ room.message }}
+          <li v-for="room in rooms" :key="room.id">
+            {{ room.id }}
           </li>
         </ul>
       </div>
       <div class="players-list">
         <h3>Liste des joueurs</h3>
         <ul>
-          <li v-for="player in players" :key="player.message">
-            {{ player.message }}
+          <li v-for="player in players" :key="player.username">
+            {{ player.username }}
           </li>
         </ul>
       </div>
@@ -56,14 +57,21 @@ export default {
     };
   },
   mounted() {
+    console.log(this.player.host)
     this.socket.emit("GET:ROOMS");
     this.socket.on("LIST:ROOMS", (rooms) => {
       this.rooms = rooms;
+      console.log(rooms)
     });
     this.socket.emit("GET:PLAYERS");
     this.socket.on("LIST:PLAYERS", (players) => {
       this.players = players;
     });
+  },
+  watch: {
+    rooms() {
+      console.log(this.rooms)
+    }
   },
   methods: {
     submit: function (event) {
