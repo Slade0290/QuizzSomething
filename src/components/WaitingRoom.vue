@@ -2,9 +2,7 @@
   <section>
     <div class="create-room">
       <div class="mb-3">
-        <label for="username" class="form-label"
-          >Nom d'utilisteur</label
-        >
+        <label for="username" class="form-label">Nom d'utilisteur</label>
         <input
           type="text"
           class="form-control"
@@ -20,8 +18,8 @@
       <div class="rooms-list">
         <h3>Liste des salons</h3>
         <ul>
-          <li v-for="room in rooms" :key="room.message">
-            {{ room.message }}
+          <li v-for="room in rooms" :key="room.id">
+            {{ room.id }}
           </li>
         </ul>
       </div>
@@ -56,14 +54,12 @@ export default {
     };
   },
   mounted() {
-    this.socket.emit("GET:ROOMS");
-    this.socket.on("LIST:ROOMS", (rooms) => {
-      this.rooms = rooms;
-    });
-    this.socket.emit("GET:PLAYERS");
-    this.socket.on("LIST:PLAYERS", (players) => {
-      this.players = players;
-    });
+    this.roomList();
+    this.playerList();
+  },
+  updated() {
+    this.roomList();
+    this.playerList();
   },
   methods: {
     submit: function (event) {
@@ -71,6 +67,18 @@ export default {
       this.player.host = true;
       this.player.socketId = this.socket.id;
       this.socket.emit("playerData", this.player);
+    },
+    roomList: function (event) {
+      this.socket.emit("GET:ROOMS");
+      this.socket.on("LIST:ROOMS", (rooms) => {
+        this.rooms = rooms;
+      });
+    },
+    playerList: function (event) {
+      this.socket.emit("GET:PLAYERS");
+      this.socket.on("LIST:PLAYERS", (players) => {
+        this.players = players;
+      });
     },
   },
 };
