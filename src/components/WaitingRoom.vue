@@ -26,13 +26,14 @@
           </li>
         </ul>
       </div>
-      <div class="players-list">
+      <div v-if="player.host" class="players-list">
         <h3>Liste des joueurs</h3>
         <ul>
           <li v-for="player in players" :key="player.username">
             {{ player.username }}
           </li>
         </ul>
+        <button v-on:click="start">Start</button>
       </div>
     </div>
   </section>
@@ -80,6 +81,9 @@ export default {
       this.player.socketId = this.socket.id;
       this.socket.emit("playerData", this.player);
     },
+    start: function (event) {
+      console.log('Start quiz !')
+    }
   },
 };
 </script>
