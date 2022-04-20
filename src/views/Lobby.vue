@@ -19,12 +19,7 @@
         <h3>Créer un salon privé</h3>
         <button v-on:click="submit" class="create-room">Let's go !</button>
       </div>
-<<<<<<< HEAD
       <div v-if="!player.roomId" class="rooms-list-region">
-=======
-      <div v-if="player.roomId">Waiting...</div>
-      <div v-else class="rooms-list-region">
->>>>>>> 36af10be37933c32c03042636011d95fde04e9f5
         <h3>Liste des salons</h3>
         <ul>
           <li v-for="room in rooms" :key="room.id">
@@ -117,7 +112,6 @@ export default {
 };
 </script>
 
-<<<<<<< HEAD
 <style lang="scss">
   @font-face {
     font-family: 'Greconian';
@@ -205,91 +199,4 @@ export default {
   .create-room-region {
     grid-area: create;
   }
-=======
-<style>
-@font-face {
-  font-family: "Greconian";
-  src: url(../assets/fonts/Greconian.ttf);
-}
-html,
-body,
-#app {
-  height: 100%;
-  background: radial-gradient(#003, #000);
-  overflow: hidden;
-  color: white;
-  font-family: "Greconian";
-}
-section {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  height: 100%;
-  width: 65%;
-  justify-content: center;
-  margin: 0 auto;
-}
-input {
-  border: none;
-}
-button {
-  border: none;
-}
-.container {
-  display: grid;
-  grid-template-areas:
-    "name name"
-    "create list";
-}
-.title {
-  padding: 1rem;
-  font-size: 2em;
-}
-.subtitle {
-  font-size: 2em;
-  padding: 1rem;
-}
-.question {
-  font-size: 1.5em;
-}
-.answer {
-  font-size: 1.5em;
-}
-.create-room {
-  color: white;
-  margin: 4rem;
-  height: 5rem;
-  width: 5rem;
-  border-radius: 50%;
-  font-size: 1rem;
-  cursor: pointer;
-  background: #4c956c;
-}
-.create-room:hover {
-  background: #2c6e49;
-}
-.username-input-region {
-  grid-area: name;
-  display: flex;
-  flex-direction: column;
-}
-.box {
-  border: 2px solid #b78846;
-  padding: 5px;
-}
-.box-inner {
-  border: 2px solid #b78846;
-  padding: 40px;
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-}
-.rooms-list-region {
-  grid-area: list;
-  padding: 1rem;
-}
-.create-room-region {
-  grid-area: create;
-}
->>>>>>> 36af10be37933c32c03042636011d95fde04e9f5
 </style>
