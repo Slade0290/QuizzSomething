@@ -81,7 +81,7 @@ export default {
     },
     start: function (event) {
       console.log("Start quiz !");
-      this.socket.emit("START:QUIZ", this.player.socketId);
+      this.socket.emit("START:QUIZ", this.player);
     },
     join: function (roomId) {
       this.playerData();

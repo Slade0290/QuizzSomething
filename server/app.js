@@ -46,10 +46,8 @@ io.on('connection', function (socket) {
     })
 
     // START QUIZ
-    socket.on("START:QUIZ", (socketId) => {
-        console.log("Start quiz !")
-        console.log(socketId)
-        // TODO : not done yet
+    socket.on("START:QUIZ", (player) => {
+        io.to(player.roomId).emit("PLAY:QUIZ", (player));
     })
 
     // DISCONNECT
