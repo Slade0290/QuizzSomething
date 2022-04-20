@@ -32,8 +32,6 @@ io.on('connection', function (socket) {
     // LIST PLAYERS
     socket.on('GET:PLAYERS', (roomId) => {
         let room = getRoomById(roomId)
-        console.log(`room.players ${room.players}`)
-        console.log(room);
         socket.emit('LIST:PLAYERS', room.players)
     });
 
@@ -46,10 +44,8 @@ io.on('connection', function (socket) {
     })
 
     // START QUIZ
-    socket.on("START:QUIZ", (socketId) => {
-        console.log("Start quiz !")
-        console.log(socketId)
-        // TODO : not done yet
+    socket.on("START:QUIZ", (player) => {
+        io.to(player.roomId).emit("PLAY:QUIZ", (player));
     })
 
     // DISCONNECT
