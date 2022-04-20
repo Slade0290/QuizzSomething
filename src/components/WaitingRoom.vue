@@ -3,7 +3,7 @@
     <h1 class="title">Olympie</h1>
     <h2 class="subtitle">Mouseîon</h2>
     <div class="container">
-      <div class="question-answer box">
+      <div v-if="!player.username" class="question-answer box">
         <div class="box-inner">
           <label for="username" class="question">What's your name ?</label>
           <input
@@ -16,7 +16,7 @@
           <button v-on:click="submit" class="validate-answer">Créer un salon privée</button>
         </div>
       </div>
-      <div v-if="player.host">Waiting...</div>
+      <div v-if="player.roomId">Waiting...</div>
       <div v-else class="rooms-list">
         <h3>Liste des salons</h3>
         <ul>
@@ -26,7 +26,7 @@
           </li>
         </ul>
       </div>
-      <div v-if="player.host" class="players-list">
+      <div v-if="player.username" class="players-list">
         <h3>Liste des joueurs</h3>
         <ul>
           <li v-for="player in players" :key="player.username">
