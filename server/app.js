@@ -21,7 +21,6 @@ io.on('connection', function (socket) {
         socket.broadcast.emit('LIST:ROOMS', rooms);
 
         socket.join(room.id);
-        //io.to(room.id).emit('start quizz', room.players);
     });
 
     // LIST ROOMS
