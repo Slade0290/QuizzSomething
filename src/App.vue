@@ -1,19 +1,12 @@
 <template>
   <div id="app">
-    <Lobby />
+    <div id="nav">
+      <router-link to="/">Lobby</router-link> |
+      <router-link to="/quiz">Quiz</router-link>
+    </div>
+    <router-view/>
   </div>
 </template>
-
-<script>
-import Lobby from './components/Lobby.vue'
-
-export default {
-  name: 'app',
-  components: {
-    Lobby,
-}
-}
-</script>
 
 <style>
 
