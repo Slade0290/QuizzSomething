@@ -15,12 +15,11 @@
           />
         </div>
       </div>
-      <div class="create-room-region">
+      <div v-if="!player.username" class="create-room-region">
         <h3>Créer un salon privé</h3>
         <button v-on:click="submit" class="create-room">Let's go !</button>
-      </div>      
-      <div v-if="player.roomId">Waiting...</div>
-      <div v-else class="rooms-list-region">
+      </div>
+      <div v-if="!player.roomId" class="rooms-list-region">
         <h3>Liste des salons</h3>
         <ul>
           <li v-for="room in rooms" :key="room.id">
@@ -32,7 +31,7 @@
       <div v-if="player.username" class="players-list">
         <h3>Liste des joueurs</h3>
         <ul>
-          <li v-for="player in players" :key="player.username">
+          <li v-for="player in players" :key="player.username" class="player-name">
             {{ player.username }}
           </li>
         </ul>
@@ -111,7 +110,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
   @font-face {
     font-family: 'Greconian';
     src: url(../assets/fonts/Greconian.ttf);
@@ -167,9 +166,9 @@ export default {
     font-size: 1rem;
     cursor: pointer;
     background: #4c956c;
-  }
-  .create-room:hover {
-    background: #2c6e49;
+    &:hover {
+      background: #2c6e49;
+    }
   }
   .username-input-region {
     grid-area: name;
@@ -186,6 +185,10 @@ export default {
     display: flex;
     justify-content: center;
     gap: 1rem;
+  }
+  .player-list, ul {
+    list-style: none;
+    padding: 0;
   }
   .rooms-list-region {
     grid-area: list;
