@@ -1,11 +1,11 @@
 <template>
   <section>
     <h1 class="title">Olympie</h1>
-    <h2 class="subtitle">Mouseîon</h2>
+    <h2 class="subtitle">Quiz</h2>
     <div class="container">
-      <div v-if="!player.username" class="question-answer box">
+      <div v-if="!player.username" class="username-input-region box">
         <div class="box-inner">
-          <label for="username" class="question">What's your name ?</label>
+          <label for="username" class="question">Choisis un nom</label>
           <input
             type="text"
             ref="username"
@@ -13,11 +13,14 @@
             class="answer"
             required
           />
-          <button v-on:click="submit" class="validate-answer">Créer un salon privée</button>
         </div>
       </div>
+      <div class="create-room-region">
+        <h3>Créer un salon privé</h3>
+        <button v-on:click="submit" class="create-room">Let's go !</button>
+      </div>      
       <div v-if="player.roomId">Waiting...</div>
-      <div v-else class="rooms-list">
+      <div v-else class="rooms-list-region">
         <h3>Liste des salons</h3>
         <ul>
           <li v-for="room in rooms" :key="room.id">
@@ -33,7 +36,7 @@
             {{ player.username }}
           </li>
         </ul>
-        <button v-on:click="start">Start</button>
+        <button v-if="player.host" v-on:click="start">Start</button>
       </div>
     </div>
   </section>
@@ -118,13 +121,16 @@ export default {
     background: radial-gradient(#003, #000);
     overflow: hidden;
     color: white;
+    font-family: 'Greconian';
   }
   section {
     display: flex;
     flex-direction: column;
     text-align: center;
-    flex: 0 1;
     height: 100%;
+    width: 65%;
+    justify-content: center;
+    margin: 0 auto;
   }
   input {
     border: none;
@@ -132,9 +138,13 @@ export default {
   button {
     border: none;
   }
+  .container {
+    display: grid;
+    grid-template-areas: 
+      "name name"
+      "create list";
+  }
   .title {
-    font-family: 'Greconian';
-    position: absolute;
     padding: 1rem;
     font-size: 2em;
   }
@@ -143,23 +153,26 @@ export default {
     padding: 1rem;
   }
   .question {
-    font-size: 4em;
+    font-size: 1.5em;
   }
   .answer {
-    margin: 5rem;
-    font-size: 4em;
-    padding: 1.5rem;
+    font-size: 1.5em;
   }
-  .validate-answer {
+  .create-room {
+    color: white;
     margin: 4rem;
-    height: 2em;
-    font-size: 2em;
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
     background: #4c956c;
   }
-  .validate-answer:hover {
+  .create-room:hover {
     background: #2c6e49;
   }
-  .question-answer {
+  .username-input-region {
+    grid-area: name;
     display: flex;
     flex-direction: column;
   }
@@ -171,9 +184,14 @@ export default {
     border: 2px solid #b78846;
     padding: 40px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
   }
-  .rooms-list {
+  .rooms-list-region {
+    grid-area: list;
     padding: 1rem;
+  }
+  .create-room-region {
+    grid-area: create;
   }
 </style>
