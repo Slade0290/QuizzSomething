@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <WaitingRoom />
+    <Lobby />
   </div>
 </template>
 
 <script>
-import WaitingRoom from './components/WaitingRoom.vue'
+import Lobby from './components/Lobby.vue'
 
 export default {
   name: 'app',
   components: {
-    WaitingRoom
+    Lobby,
 }
 }
 </script>
