@@ -1,10 +1,9 @@
-<template>
-</template>
+<template></template>
 
 <script>
 import io from "socket.io-client";
 
-export default ({
+export default {
   data() {
     return {
       player: {
@@ -20,14 +19,10 @@ export default ({
     };
   },
   mounted() {
-    this.socket.on("PLAY:QUIZZ", (player) => {
-    });
-
+    console.log("play")
   },
-  updated() {
-  },
-})
-
+  updated() {},
+};
 </script>
 
 

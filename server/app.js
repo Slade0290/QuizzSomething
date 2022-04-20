@@ -32,8 +32,6 @@ io.on('connection', function (socket) {
     // LIST PLAYERS
     socket.on('GET:PLAYERS', (roomId) => {
         let room = getRoomById(roomId)
-        console.log(`room.players ${room.players}`)
-        console.log(room);
         socket.emit('LIST:PLAYERS', room.players)
     });
 
