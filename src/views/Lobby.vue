@@ -113,28 +113,25 @@ export default {
 </script>
 
 <style lang="scss">
-  @font-face {
-    font-family: 'Greconian';
-    src: url(../assets/fonts/Greconian.ttf);
-  }
   html, body, #app{
     height: 100%;
-    background: radial-gradient(#003, #000);
+    background: #dee2e6;
     overflow: hidden;
-    color: white;
-    font-family: 'Greconian';
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   section {
     display: flex;
+    align-items: center;
     flex-direction: column;
-    text-align: center;
-    height: 100%;
-    width: 65%;
-    justify-content: center;
+    background: white;
+    padding: 2rem;
+    box-shadow: .05rem .05rem .1rem .05rem rgba(0,0,0,0.3);
+    border-radius: 1rem .1rem 1rem .1rem;
+    min-width: 50vw;
+    min-height: 60vh;
     margin: 0 auto;
-  }
-  input {
-    border: none;
   }
   button {
     border: none;
@@ -178,11 +175,9 @@ export default {
     flex-direction: column;
   }
   .box {
-    border: 2px solid #b78846;
     padding: 5px;
   }
   .box-inner {
-    border: 2px solid #b78846;
     padding: 40px;
     display: flex;
     justify-content: center;
