@@ -65,7 +65,7 @@ export default {
       this.players = players;
     });
     this.socket.on("PLAY:QUIZ", (player) => {
-      this.$router.push("/quiz");
+      this.$router.push('/quiz');
     });
   },
   updated() {

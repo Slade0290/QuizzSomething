@@ -1,5 +1,6 @@
 
-const express = require('express');
+import express from 'express';
+import fetch from 'node-fetch';
 
 const app = express();
 
@@ -7,7 +8,9 @@ const server = app.listen(3001, function () {
     console.log('server running on port 3001');
 });
 
-const io = require('socket.io')(server);
+import Socket from 'socket.io';
+
+const io = new Socket(server)
 
 let rooms = [];
 
@@ -73,6 +76,11 @@ io.on('connection', function (socket) {
             });
         });
     });
+
+    socket.on("LOAD:QUESTION", () => {
+        console.log('load question ',socket.id)
+        loadQuestion();
+    })
 });
 
 function createRoom(player) {
@@ -92,3 +100,10 @@ function roomId() {
 function getRoomById(roomId) {
     return rooms.find(x => x.id === roomId)
 }
+
+async function loadQuestion() {
+    const APIUrl = 'https://opentdb.com/api.php?amount=1'
+    const result = await fetch(`${APIUrl}`)
+    const data = await result.json();
+    console.log(data);
+  }

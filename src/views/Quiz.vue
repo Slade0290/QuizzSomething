@@ -23,6 +23,7 @@
 
 <script>
 import io from "socket.io-client";
+import AppVue from '../App.vue';
 
 export default {
   data() {
@@ -42,6 +43,7 @@ export default {
   mounted() {
     console.log("play")
     this.startClock();
+      this.loadQuestion();
   },
   updated() {},
   methods: {
@@ -58,6 +60,9 @@ export default {
           clearInterval(timer)
         }
       }, 1000)
+    },
+    loadQuestion: function() {
+      this.socket.emit("LOAD:QUESTION")
     }
   }
 };
