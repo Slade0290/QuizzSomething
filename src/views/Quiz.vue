@@ -1,13 +1,22 @@
 <template>
     <section>
         <div class="inner-box">
-            <div class="question item">
-                Hello, je suis une question !
-            </div>
-            <div class="answer answer-1 item">Réponse 1</div>
-            <div class="answer answer-2 item">Réponse 2</div>
-            <div class="answer answer-3 item">Réponse 3</div>
-            <div class="answer answer-4 item">Réponse 4</div>
+          <div id="clock" ref="clock">5</div>
+          <div class="question">
+              Hello, je suis une question !
+          </div>
+          <div class="item">
+            <input type="checkbox" class="answer" id="one"/><label for="one">Réponse 1</label>
+          </div>
+          <div class="item">
+            <input type="checkbox" class="answer" id="two"/><label for="two" class="">Réponse 2</label>
+          </div>
+          <div class="item">
+            <input type="checkbox" class="answer" id="three"/><label for="three" class="">Réponse 3</label>
+          </div>
+          <div class="item">
+            <input type="checkbox" class="answer" id="four"/><label for="four" class="">Réponse 4</label>
+          </div>
         </div>
     </section>
 </template>
@@ -32,8 +41,25 @@ export default {
   },
   mounted() {
     console.log("play")
+    this.startClock();
   },
   updated() {},
+  methods: {
+    startClock: function() {
+      console.log('startClock')
+      let i = 0;
+      let el = this.$refs
+      let timer = null
+      timer = setInterval(function countdown() {
+        el.clock.innerText = 5 - i;
+        i++;
+        if(i == 6) {
+          console.log("time's up !")
+          clearInterval(timer)
+        }
+      }, 1000)
+    }
+  }
 };
 </script>
 
@@ -51,14 +77,24 @@ section {
             margin: 2rem;
             height: 6rem;
             line-height: 6rem;
-        }
-        .answer {
-            margin: 2rem;
-            line-height: 3rem;
-            height: 3rem;
-        }
+        }        
         .item {
-            background: black;
+            .answer {
+                transition: 0.5s;
+                display: none;
+                &:checked ~ label {
+                  background: rgba(255,255,255,0.15);
+                  cursor: pointer;
+                  border: 1px white solid;
+                }
+            }
+            label {
+              display: block;
+              background: black;
+              margin: 1rem;
+              border: 1px darkgrey solid;
+              padding: 0.5rem;
+            }
         }
     }
 }
