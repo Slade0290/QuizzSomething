@@ -1,43 +1,45 @@
 <template>
   <section>
-    <h1 class="title">Olympie</h1>
-    <h2 class="subtitle">Quiz</h2>
-    <div class="container">
-      <div v-if="!player.username" class="username-input-region box">
-        <div class="box-inner">
-          <label for="username" class="question">Choisis un nom</label>
-          <input
-            type="text"
-            ref="username"
-            id="username"
-            class="answer"
-            required
-          />
+    <h1 class="title">OLYMPIE</h1>
+    <section class="sub-section">
+      <h2 class="subtitle">QUIZ</h2>
+      <div class="container">
+        <div v-if="!player.username" class="username-input-region box">
+          <div class="box-inner">
+            <label for="username" class="question">PSEUDO</label>
+            <input
+              type="text"
+              ref="username"
+              id="username"
+              class="answer"
+              required
+            />
+          </div>
+        </div>
+        <div v-if="!player.username" class="create-room-region box">
+          <div>CREER UN SALON PRIVE</div>
+          <button v-on:click="submit" class="create-room">GO</button>
+        </div>
+        <div v-if="!player.roomId" class="rooms-list-region box">
+          <div>LISTE DES SALONS</div>
+          <ul>
+            <li v-for="room in rooms" :key="room.id">
+              {{ room.id }}
+              <button v-on:click="join(room.id)">Join</button>
+            </li>
+          </ul>
+        </div>
+        <div v-if="player.username" class="players-list box">
+          <div>LISTE DES JOUEURS</div>
+          <ul>
+            <li v-for="player in players" :key="player.username" class="player-name">
+              {{ player.username }}
+            </li>
+          </ul>
+          <button v-if="player.host" v-on:click="start">Start</button>
         </div>
       </div>
-      <div v-if="!player.username" class="create-room-region">
-        <h3>Créer un salon privé</h3>
-        <button v-on:click="submit" class="create-room">Let's go !</button>
-      </div>
-      <div v-if="!player.roomId" class="rooms-list-region">
-        <h3>Liste des salons</h3>
-        <ul>
-          <li v-for="room in rooms" :key="room.id">
-            {{ room.id }}
-            <button v-on:click="join(room.id)">Join</button>
-          </li>
-        </ul>
-      </div>
-      <div v-if="player.username" class="players-list">
-        <h3>Liste des joueurs</h3>
-        <ul>
-          <li v-for="player in players" :key="player.username" class="player-name">
-            {{ player.username }}
-          </li>
-        </ul>
-        <button v-if="player.host" v-on:click="start">Start</button>
-      </div>
-    </div>
+    </section>
   </section>
 </template>
 
@@ -113,25 +115,33 @@ export default {
 </script>
 
 <style lang="scss">
+$mainBackground: rgba(131, 128, 182, 1);
+@font-face {
+ font-family: "Organic Relief";
+ src: url("../assets/fonts/Organic Relief.ttf");
+}
   html, body, #app{
     height: 100%;
-    background: #dee2e6;
+    font-family: "Organic Relief";
+    background: $mainBackground;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: rgba(17, 29, 74, 1);
   }
-  section {
+  
+  .sub-section {
     display: flex;
     align-items: center;
     flex-direction: column;
-    background: white;
+    background: rgba(255,255,255,0.6);
     padding: 2rem;
-    box-shadow: .05rem .05rem .1rem .05rem rgba(0,0,0,0.3);
-    border-radius: 1rem .1rem 1rem .1rem;
+    box-shadow: .15rem .15rem .1rem .05rem rgba(0,0,0,0.3);
+    border-radius: 1rem;
     min-width: 50vw;
     min-height: 60vh;
-    margin: 0 auto;
+    margin: 2rem;
   }
   button {
     border: none;
@@ -141,32 +151,46 @@ export default {
     grid-template-areas: 
       "name name"
       "create list";
+    grid-template-columns: 1fr 1fr;
+    column-gap: .5rem;
+    row-gap: .5rem;
   }
   .title {
+    text-align: center;
     padding: 1rem;
     font-size: 2em;
+    box-shadow: .15rem .15rem .1rem .05rem rgba(0,0,0,0.3);
+    margin: 1rem;
+    background: rgba(255,255,255,.5);
+    border-radius: 2rem;
   }
   .subtitle {
     font-size: 2em;
     padding: 1rem;
   }
   .question {
-    font-size: 1.5em;
+    // font-size: 1.5em;
   }
   .answer {
     font-size: 1.5em;
   }
   .create-room {
+    font-family: "Organic Relief";
     color: white;
     margin: 4rem;
     height: 5rem;
     width: 5rem;
     border-radius: 50%;
-    font-size: 1rem;
     cursor: pointer;
-    background: #4c956c;
+    background: #56d18b;
+    transition: .5s;
     &:hover {
-      background: #2c6e49;
+      background: #4aa571;
+      font-size: 1.5rem;
+      height: 6rem;
+      width: 6rem;
+      margin: 3.5rem;
+      // animation
     }
   }
   .username-input-region {
@@ -175,7 +199,9 @@ export default {
     flex-direction: column;
   }
   .box {
-    padding: 5px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 1rem;
   }
   .box-inner {
     padding: 40px;
@@ -183,16 +209,17 @@ export default {
     justify-content: center;
     gap: 1rem;
   }
-  .player-list, ul {
-    list-style: none;
-    padding: 0;
+  .players-list {
+    grid-area: player-list;
+    ul {
+      list-style: none;
+      padding: 0;
+    }
   }
   .rooms-list-region {
     grid-area: list;
-    padding: 1rem;
   }
   .create-room-region {
     grid-area: create;
-    padding: 1rem;
   }
 </style>
