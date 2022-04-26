@@ -43,6 +43,7 @@
 
 <script>
 import io from "socket.io-client";
+import Cookies from 'js-cookie';
 
 export default {
   data() {
@@ -51,6 +52,7 @@ export default {
         host: false,
         roomId: null,
         username: "",
+        cookieId: "",
         socketId: "",
         win: false,
       },
@@ -60,12 +62,16 @@ export default {
     };
   },
   mounted() {
+    this.socket.on('connect', () => {
+      Cookies.set('Olympie', this.socket.id)
+    })
+
     this.roomList();
     this.socket.on("LIST:PLAYERS", (players) => {
       this.players = players;
     });
     this.socket.on("PLAY:QUIZ", (player) => {
-      this.$router.push('/quiz');
+      this.$router.push({ name: 'quiz', params: { 'roomId' : player.roomId } });
     });
   },
   updated() {
@@ -106,7 +112,8 @@ export default {
     },
     playerData: function (event) {
       this.player.username = this.$refs.username.value;
-      this.player.socketId = this.socket.id;
+      this.player.cookieId = Cookies.get('value');
+      this.player.socketId = this.socket.id
     },
   },
 };

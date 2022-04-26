@@ -1,6 +1,7 @@
 
 import express from 'express';
 import fetch from 'node-fetch';
+import Socket from 'socket.io';
 
 const app = express();
 
@@ -8,14 +9,14 @@ const server = app.listen(3001, function () {
     console.log('server running on port 3001');
 });
 
-import Socket from 'socket.io';
-
 const io = new Socket(server)
 
 let rooms = [];
 
+
 io.on('connection', function (socket) {
-    console.log(socket.id)
+
+    console.log('connection', socket.id)
     socket.on('CREATE:ROOM', (player) => {
         let room = null;
 
@@ -77,9 +78,14 @@ io.on('connection', function (socket) {
         });
     });
 
-    socket.on("LOAD:QUESTION", () => {
-        console.log('load question ',socket.id)
-        loadQuestion();
+    socket.on("LOAD:QUESTION", (roomId) => {
+        loadQuestion().then((resp, err) => {
+            if(resp){
+                io.to(roomId).emit("SHOW:QUESTIONS", (resp));
+            }else {
+                console.log(err);
+            }
+        })   
     })
 });
 
@@ -105,5 +111,13 @@ async function loadQuestion() {
     const APIUrl = 'https://opentdb.com/api.php?amount=1'
     const result = await fetch(`${APIUrl}`)
     const data = await result.json();
-    console.log(data);
-  }
+     return await showQuestion(data.results[0]);
+}
+
+async function showQuestion(data){
+    let correctAnswer = data.correct_answer;
+    let incorrectAnswer = data.incorrect_answers;
+    let optionsList = incorrectAnswer;
+    optionsList.splice(Math.floor(Math.random() * (incorrectAnswer.length +1 )), 0, correctAnswer);
+     return {"category" : data.category, "difficulty" : data.difficulty, "question" : data.question, "options" : optionsList}
+}

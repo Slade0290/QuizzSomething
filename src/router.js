@@ -15,7 +15,7 @@ export default new Router({
       component: Lobby
     },
     {
-      path: '/quiz',
+      path: '/quiz/:roomId',
       name: 'quiz',
       component: Quiz
     }
