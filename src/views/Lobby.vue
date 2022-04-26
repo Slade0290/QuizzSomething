@@ -193,5 +193,6 @@ export default {
   }
   .create-room-region {
     grid-area: create;
+    padding: 1rem;
   }
 </style>

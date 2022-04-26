@@ -2,7 +2,7 @@
     <section>
         <div class="inner-box">
           <div class="header">
-            <div id="clock" ref="clock">5</div>
+            <div id="clock" ref="clock"></div>
             <div class="question">
                 Hello, je suis une question !
             </div>
@@ -33,7 +33,6 @@
 
 <script>
 import io from "socket.io-client";
-import AppVue from '../App.vue';
 
 export default {
   data() {
@@ -51,21 +50,25 @@ export default {
     };
   },
   mounted() {
-    console.log("play")
     this.startClock();
-      this.loadQuestion();
+    this.loadQuestion();
   },
   updated() {},
   methods: {
     startClock: function() {
-      console.log('startClock')
       let i = 0;
       let el = this.$refs
       let timer = null
+      let initialValue = 30;
+      let countdownSecond = 30;
       timer = setInterval(function countdown() {
-        el.clock.innerText = 5 - i;
+        let timeLeft = countdownSecond - i
+        el.clock.innerText = timeLeft;
+        let progression = 100 - timeLeft / initialValue * 100;
+        console.log(progression)
+        el.clock.style.background = `linear-gradient(90deg, rgba(219,23,37,1) ${progression}%, rgba(23,219,49,1) ${progression}%)`
         i++;
-        if(i == 6) {
+        if(i == countdownSecond + 1) {
           console.log("time's up !")
           clearInterval(timer)
         }
@@ -87,6 +90,11 @@ section {
       height: 100%;
       .header {
         text-align: center;
+          #clock {
+            transition: .5s;
+            text-align: center;
+            color: white;
+          }
           #theme {
             background: $button-bckgnd-color;
             display: inline;
