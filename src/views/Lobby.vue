@@ -65,7 +65,9 @@ export default {
   },
   mounted() {
     this.socket.on('connect', () => {
-      Cookies.set('Olympie', this.socket.id)
+      if(!Cookies.get('Olympie')) {
+        Cookies.set('Olympie', this.socket.id)
+      }
     })
 
     this.roomList();
@@ -90,6 +92,9 @@ export default {
       });
     },
     start: function (event) {
+      Cookies.set('player.roomId', this.player.roomId)
+      Cookies.set('player.socketId', this.player.socketId)
+      Cookies.set('player.username', this.player.username)
       this.socket.emit("START:QUIZ", this.player);
     },
     join: function (roomId) {
@@ -97,6 +102,7 @@ export default {
       this.player.roomId = roomId;
       this.socket.emit("JOIN:ROOM", this.player, roomId);
       this.playerList();
+      console.log("this.player.socketId : ", this.player.socketId)
     },
     roomList: function (event) {
       this.socket.emit("GET:ROOMS");
@@ -213,6 +219,7 @@ $mainBackground: rgba(131, 128, 182, 1);
   .box-inner {
     padding: 40px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     gap: 1rem;
   }

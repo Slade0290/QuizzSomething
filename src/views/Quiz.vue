@@ -6,20 +6,20 @@
             <div class="header">
               <div id="clock" ref="clock">30</div>
               <div class="question" ref="question">HELLO JE SUIS UNE QUESTION !</div>
-              <div id="theme" class="item">THEME</div>
+              <div ref="theme" class="item theme">THEME</div>
             </div>
             <ul>
               <li class="item">
-                <input type="checkbox" class="answer" id="one"/><label for="one">REPONSE 1</label>
+                <input type="checkbox" class="answer" /><label for="one" class="answer-label" ref="one">REPONSE 1</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" id="two"/><label for="two" class="">REPONSE 2</label>
+                <input type="checkbox" class="answer" /><label for="two" class="answer-label" ref="two">REPONSE 2</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" id="three"/><label for="three" class="">REPONSE 3</label>
+                <input type="checkbox" class="answer" /><label for="three" class="answer-label" ref="three">REPONSE 3</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" id="four"/><label for="four" class="">REPONSE 4</label>
+                <input type="checkbox" class="answer" /><label for="four" class="answer-label" ref="four">REPONSE 4</label>
               </li>
             </ul>
             <div class="footer">
@@ -51,14 +51,14 @@ export default {
   },
   mounted() {
     console.log("play");
-    console.log(Cookies.get('value'))
+    console.log(Cookies.get('Olympie'))
+    console.log(Cookies.get('player.username'))
+    console.log(Cookies.get('player.socketId'))
+    console.log(Cookies.get('player.roomId'))
     this.roomId = this.$route.params.roomId;
     this.startClock();
     this.loadQuestion();
-    console.log(this.socket)
-    this.socket.on("SHOW:QUESTIONS", (data) => {
-      console.log("questions_data", data);
-    });
+    console.log(this.socket)    
   },
   updated() {},
   methods: {
@@ -82,7 +82,29 @@ export default {
       }, 1000);
     },
     loadQuestion: function () {
+      console.log(Cookies.get('Olympie'))
+      console.log("roomId", this.roomId)
       this.socket.emit("LOAD:QUESTION", this.roomId);
+      this.socket.on("SHOW:QUESTIONS", (data) => {
+        console.log("questions_data", data);
+        this.$refs.question.innerText = data.question
+        console.log(data.options[0])
+        this.$refs.one.innerText = data.options[0]
+        this.$refs.two.innerText = data.options[1]
+        this.$refs.three.innerText = data.options[2]
+        this.$refs.four.innerText = data.options[3]
+        this.$refs.theme.innerText = data.category
+        let difficulty = data.difficulty
+        let color = ""
+        if(difficulty === "easy") {
+          color = "green"
+        } else if(difficulty === "hard") {
+          color = "ref"
+        } else {
+          color = "orange"
+        }
+        this.$refs.theme.style.background = color
+      });
     },
   },
 };
@@ -109,8 +131,7 @@ section {
             background: linear-gradient(90deg, rgba(17, 29, 74,1) 0%, rgba(23,219,49,1) 0%);
             box-shadow: .05rem .05rem .1rem .05rem rgba(0,0,0,0.3);
           }
-          #theme {
-            background: $button-bckgnd-color;
+          .theme {
             display: inline;
             padding: .3rem;
             border-radius: .3rem;
@@ -118,11 +139,13 @@ section {
           }
           .question {  
             text-align: center;
-              height: 6rem;
-              line-height: 6rem;
+            min-height: 6rem;
+            line-height: 6rem;
+            text-transform: uppercase;
           }        
         }
         .item {
+          text-transform: uppercase;
           color: white;
             .answer {
                 transition: 0.5s;

@@ -43,6 +43,7 @@ io.on('connection', function (socket) {
         let room = getRoomById(roomId);
         room.players.push(player);
         io.to(roomId).emit('LIST:PLAYERS', room.players)
+        console.log("socket.id", socket.id)
         socket.join(roomId);
     })
 
@@ -79,10 +80,15 @@ io.on('connection', function (socket) {
     });
 
     socket.on("LOAD:QUESTION", (roomId) => {
+        socket.join(roomId); // CAN CAUSE TROUBLE
         loadQuestion().then((resp, err) => {
-            if(resp){
+            console.log("socket.rooms : ", socket.rooms)
+            console.log("roomId : ", roomId)
+            if(resp) {
+                console.log("load question ok")
                 io.to(roomId).emit("SHOW:QUESTIONS", (resp));
-            }else {
+            } else {
+                console.log("load question nok")
                 console.log(err);
             }
         })   
@@ -111,7 +117,7 @@ async function loadQuestion() {
     const APIUrl = 'https://opentdb.com/api.php?amount=1'
     const result = await fetch(`${APIUrl}`)
     const data = await result.json();
-     return await showQuestion(data.results[0]);
+    return await showQuestion(data.results[0]);
 }
 
 async function showQuestion(data){
@@ -119,5 +125,5 @@ async function showQuestion(data){
     let incorrectAnswer = data.incorrect_answers;
     let optionsList = incorrectAnswer;
     optionsList.splice(Math.floor(Math.random() * (incorrectAnswer.length +1 )), 0, correctAnswer);
-     return {"category" : data.category, "difficulty" : data.difficulty, "question" : data.question, "options" : optionsList}
+    return {"category" : data.category, "difficulty" : data.difficulty, "question" : data.question, "options" : optionsList}
 }
