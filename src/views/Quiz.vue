@@ -10,7 +10,7 @@
             </div>
             <ul>
               <li v-for="(answer, index) in answers" :key="answer" class="item">
-                <input type="radio" class="answer" name="radios" :id="index"/><label :for="index" class="answer-label">{{answer}}"</label>
+                <input type="radio" class="answer" name="radios" :id="index"/><label :for="index" class="answer-label">{{answer}}</label>
               </li>
             </ul>
           </div>
