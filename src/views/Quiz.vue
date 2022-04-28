@@ -10,23 +10,18 @@
             </div>
             <ul>
               <li class="item">
-                <input type="checkbox" class="answer" id="one"/><label for="one" class="answer-label" ref="one">REPONSE 1</label>
+                <input type="radio" class="answer" id="one" name="radios"/><label for="one" class="answer-label" ref="one">REPONSE 1</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" id="two"/><label for="two" class="answer-label" ref="two">REPONSE 2</label>
+                <input type="radio" class="answer" id="two" name="radios"/><label for="two" class="answer-label" ref="two">REPONSE 2</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" id="three"/><label for="three" class="answer-label" ref="three">REPONSE 3</label>
+                <input type="radio" class="answer" id="three" name="radios"/><label for="three" class="answer-label" ref="three">REPONSE 3</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" id="four"/><label for="four" class="answer-label" ref="four">REPONSE 4</label>
+                <input type="radio" class="answer" id="four" name="radios"/><label for="four" class="answer-label" ref="four">REPONSE 4</label>
               </li>
             </ul>
-            <!--
-            <div class="footer">
-              <div class="btn-validate item">VALIDER</div>
-            </div>
-            -->
           </div>
       </section>
     </section>
