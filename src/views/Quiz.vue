@@ -10,7 +10,7 @@
             </div>
             <ul>
               <li v-for="answer in answers" :key="answer" class="item">
-                <input type="radio" class="answer" name="radios" id="one"/><label for="one" class="answer-label">{{answer}}</label>
+                <input type="radio" class="answer" name="radios" id="one"/><label for="one" class="answer-label">{{decodeHtmlCharCodes(answer)}}</label>
               </li>
             </ul>
           </div>
@@ -68,7 +68,7 @@ export default {
       this.socket.emit("LOAD:QUESTION", this.roomId);
       this.socket.on("SHOW:QUESTIONS", (data) => {
         console.log("questions_data", data);
-        this.$refs.question.innerText = data.question
+        this.$refs.question.innerText = this.decodeHtmlCharCodes(data.question)
         this.answers = data.options;
         this.$refs.theme.innerText = data.category
         let difficulty = data.difficulty
@@ -84,7 +84,10 @@ export default {
         this.$refs.theme.style.background = color
       });
     },
-  },
+    decodeHtmlCharCodes: function(str) {
+      return str.replace(/&quot;/g, '\"').replace(/&#039;/g, "'").replace(/&amp;/g, '\&')
+    },
+}
 };
 </script>
 
