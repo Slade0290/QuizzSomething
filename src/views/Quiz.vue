@@ -13,11 +13,6 @@
                 <input type="checkbox" class="answer"/><label for="one" class="answer-label">{{answer}}</label>
               </li>
             </ul>
-            <!--
-            <div class="footer">
-              <div class="btn-validate item">VALIDER</div>
-            </div>
-            -->
           </div>
       </section>
     </section>
