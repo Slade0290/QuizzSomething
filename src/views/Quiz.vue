@@ -10,21 +10,23 @@
             </div>
             <ul>
               <li class="item">
-                <input type="checkbox" class="answer" /><label for="one" class="answer-label" ref="one">REPONSE 1</label>
+                <input type="checkbox" class="answer" id="one"/><label for="one" class="answer-label" ref="one">REPONSE 1</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" /><label for="two" class="answer-label" ref="two">REPONSE 2</label>
+                <input type="checkbox" class="answer" id="two"/><label for="two" class="answer-label" ref="two">REPONSE 2</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" /><label for="three" class="answer-label" ref="three">REPONSE 3</label>
+                <input type="checkbox" class="answer" id="three"/><label for="three" class="answer-label" ref="three">REPONSE 3</label>
               </li>
               <li class="item">
-                <input type="checkbox" class="answer" /><label for="four" class="answer-label" ref="four">REPONSE 4</label>
+                <input type="checkbox" class="answer" id="four"/><label for="four" class="answer-label" ref="four">REPONSE 4</label>
               </li>
             </ul>
+            <!--
             <div class="footer">
               <div class="btn-validate item">VALIDER</div>
             </div>
+            -->
           </div>
       </section>
     </section>
@@ -96,10 +98,11 @@ export default {
         this.$refs.theme.innerText = data.category
         let difficulty = data.difficulty
         let color = ""
+        console.log("difficulty:", difficulty)
         if(difficulty === "easy") {
           color = "green"
         } else if(difficulty === "hard") {
-          color = "ref"
+          color = "red"
         } else {
           color = "orange"
         }
@@ -132,15 +135,15 @@ section {
             box-shadow: .05rem .05rem .1rem .05rem rgba(0,0,0,0.3);
           }
           .theme {
-            display: inline;
+            display: inline-block;
             padding: .3rem;
             border-radius: .3rem;
             font-size: .8em;
+            margin: 2rem;
           }
           .question {  
             text-align: center;
-            min-height: 6rem;
-            line-height: 6rem;
+            margin: 3rem 3rem 0 3rem;
             text-transform: uppercase;
           }        
         }

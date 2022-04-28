@@ -137,7 +137,6 @@ $mainBackground: rgba(131, 128, 182, 1);
     height: 100%;
     font-family: "Organic Relief";
     background: $mainBackground;
-    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
