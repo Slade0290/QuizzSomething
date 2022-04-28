@@ -10,7 +10,7 @@
             </div>
             <ul>
               <li v-for="answer in answers" :key="answer" class="item">
-                <input type="checkbox" class="answer"/><label for="one" class="answer-label">{{answer}}</label>
+                <input type="radio" class="answer" name="radios" id="one"/><label for="one" class="answer-label">{{answer}}</label>
               </li>
             </ul>
           </div>
@@ -20,7 +20,6 @@
 
 <script>
 import io from "socket.io-client";
-import Cookies from 'js-cookie';
 
 export default {
   data() {
