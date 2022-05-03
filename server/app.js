@@ -79,6 +79,7 @@ io.on('connection', function (socket) {
         });
     });
 
+    // LOAD QUESTION 
     socket.on("LOAD:QUESTION", (roomId) => {
         socket.join(roomId); // CAN CAUSE TROUBLE
         loadQuestion().then((resp, err) => {
@@ -92,6 +93,11 @@ io.on('connection', function (socket) {
                 console.log(err);
             }
         })   
+    })
+
+    // SEND ANSWER
+    socket.on("SEND:ANSWER", (answer) => {
+        console.log("answer:", answer)
     })
 });
 

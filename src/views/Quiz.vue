@@ -4,13 +4,13 @@
       <section class="sub-section">
           <div class="inner-box">
             <div class="header">
-              <div id="clock" ref="clock">30</div>
+              <div id="clock" ref="clock">3</div>
               <div class="question" ref="question">HELLO JE SUIS UNE QUESTION !</div>
               <div ref="theme" class="item theme">THEME</div>
             </div>
             <ul>
               <li v-for="(answer, index) in answers" :key="answer" class="item">
-                <input type="radio" class="answer" name="radios" :id="index"/><label :for="index" class="answer-label">{{answer}}</label>
+                <input type="radio" class="answer" name="radios" v-model="radios" :id="index" v-bind:value="answer"/><label :for="index" class="answer-label">{{answer}}</label>
               </li>
             </ul>
           </div>
@@ -35,6 +35,7 @@ export default {
       roomId: "",
       players: [],
       answers: [],
+      radios: '',
     };
   },
   mounted() {
@@ -49,20 +50,26 @@ export default {
       let i = 0;
       let el = this.$refs
       let timer = null
-      let initialValue = 30;
-      let countdownSecond = 30;
+      let initialValue = 3;
+      let countdownSecond = 3;
+      let context = this
       timer = setInterval(function countdown() {
         let timeLeft = countdownSecond - i
         el.clock.innerText = timeLeft;
         let progression = 100 - timeLeft / initialValue * 100;
         el.clock.style.background = `linear-gradient(90deg, rgba(17, 29, 74,1) ${progression}%, rgba(23,219,49,1) ${progression+5}%)`
         i++;
-        // use animation instead
         if(i == countdownSecond + 1) {
           console.log("time's up !")
           clearInterval(timer)
+          context.sendAnswer()
         }
       }, 1000);
+    },
+    sendAnswer: function() {
+      const answer = this.radios
+      console.log("answer:", answer)
+      this.socket.emit("SEND:ANSWER", answer)
     },
     loadQuestion: function () {
       this.socket.emit("LOAD:QUESTION", this.roomId);
@@ -85,7 +92,7 @@ export default {
       });
     },
     decodeHtmlCharCodes: function(str) {
-      return str.replace(/&quot;/g, '\"').replace(/&#039;/g, "'").replace(/&amp;/g, '\&')
+      return str.replace(/&quot;/g, '\"').replace(/&#039;/g, "'").replace(/&amp;/g, '\&').replace(/&eacute;/g, "É")
     },
 }
 };
