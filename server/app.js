@@ -92,8 +92,8 @@ io.on('connection', function (socket) {
     })
 
     // SEND ANSWER
-    socket.on("SEND:ANSWER", (answer) => {
-        console.log("answer:", answer)
+    socket.on("END:QUIZ", (score) => {
+        console.log("answer:", score)
     })
 });
 
