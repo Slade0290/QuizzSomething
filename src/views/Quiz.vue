@@ -54,34 +54,28 @@ export default {
   },
   updated() {},
   methods: {
-    startClock: function () {
+    startClock: function (duration) {
       let i = 0;
-      let el = this.$refs;
       let timer = null;
-      let initialValue = 10;
-      let countdownSecond = 10;
-      let context = this;
-      timer = setInterval(function countdown() {
+      let countdownSecond = duration;
+      timer = setInterval(() => {
         let timeLeft = countdownSecond - i;
-        el.clock.innerText = timeLeft;
-        let progression = 100 - (timeLeft / initialValue) * 100;
-        el.clock.style.background = `linear-gradient(90deg, rgba(17, 29, 74,1) ${progression}%, rgba(23,219,49,1) ${
+        this.$refs.clock.innerText = timeLeft;
+        let progression = 100 - (timeLeft / duration) * 100;
+        this.$refs.clock.style.background = `linear-gradient(90deg, rgba(17, 29, 74,1) ${progression}%, rgba(23,219,49,1) ${
           progression + 5
         }%)`;
         i++;
         if (i == countdownSecond + 1) {
-          console.log("time's up !");
           clearInterval(timer);
-          context.checkAnswer();
+          this.checkAnswer();
         }
       }, 1000);
-    },      
+    },
     checkAnswer: function() {
       const answer = this.radios
       const goodAnswer = (answer === this.answer)
-      if(goodAnswer){
-        this.score++;
-      }
+      if(goodAnswer) this.score++;
       // UGLY
       for(let i = 0; i < this.answers.length; i++) {
         if(this.$refs['answer'+i][0].innerText.toLowerCase() === answer.toLowerCase()) {
@@ -94,14 +88,14 @@ export default {
         }
       }
       this.nbQuestions++;
-      if(this.nbQuestions < 2){
-        this.loadQuestion();
-      }else{
+      if (this.nbQuestions < 2) {
+        setTimeout(this.loadQuestion, 3000)
+      } else {
         this.socket.emit("END:QUIZ", this.score);
       }
     },
-    loadQuestion: function () {
-      this.startClock();
+    loadQuestion: function() {
+      this.startClock(3);
       this.socket.emit("LOAD:QUESTION", this.roomId);
       this.socket.on("SHOW:QUESTIONS", (data) => {
         console.log("questions_data", data);
