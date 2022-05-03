@@ -5,12 +5,18 @@
           <div class="inner-box">
             <div class="header">
               <div id="clock" ref="clock">3</div>
-              <div class="question" ref="question">HELLO JE SUIS UNE QUESTION !</div>
+              <div class="question" ref="question">QUESTION</div>
               <div ref="theme" class="item theme">THEME</div>
             </div>
             <ul>
               <li v-for="(answer, index) in answers" :key="answer" class="item">
-                <input type="radio" class="answer" name="radios" v-model="radios" :id="index" v-bind:value="answer"/><label :for="index" class="answer-label">{{answer}}</label>
+                <input type="radio"
+                        class="answer" 
+                        name="radios" 
+                        v-model="radios" 
+                        :id="index" 
+                        v-bind:value="answer"/>
+                        <label :for="index" :ref="'answer'+index" class="answer-label">{{answer}}</label>
               </li>
             </ul>
           </div>
@@ -69,12 +75,17 @@ export default {
     },
     checkAnswer: function() {
       const answer = this.radios
-      console.log("answer:", answer)
-      console.log("this.answer:", this.answer)
-      if(answer == this.answer) {
-        console.log('Well done !')
-      } else {
-        console.log('Wrong, wrong, wrong !')
+      const goodAnswer = (answer === this.answer)
+      // UGLY
+      for(let i = 0; i < this.answers.length; i++) {
+        if(this.$refs['answer'+i][0].innerText.toLowerCase() === answer.toLowerCase()) {
+          if(!goodAnswer) {
+            this.$refs['answer'+i][0].style.background = 'red'
+          }
+        }
+        if(this.$refs['answer'+i][0].innerText.toLowerCase() === this.answer.toLowerCase()) {
+          this.$refs['answer'+i][0].style.background = '#17db31'
+        }
       }
     },
     loadQuestion: function () {
