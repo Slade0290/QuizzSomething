@@ -20,19 +20,6 @@
               </li>
             </ul>
           </div>
-          <div ref="theme" class="item theme">THEME</div>
-        <ul>
-          <li v-for="(answer, index) in answers" :key="answer" class="item">
-            <input
-              type="radio"
-              class="answer"
-              name="radios"
-              v-model="radios"
-              :id="index"
-              v-bind:value="answer"
-            /><label :for="index" class="answer-label">{{ answer }}</label>
-          </li>
-        </ul>
     </section>
   </section>
 </template>
