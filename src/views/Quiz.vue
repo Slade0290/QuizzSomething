@@ -50,6 +50,7 @@ export default {
   mounted() {
     console.log("play");
     this.roomId = this.$route.params.roomId;
+    this.showQuestion();
     this.loadQuestion();
   },
   updated() {},
@@ -96,7 +97,9 @@ export default {
     },
     loadQuestion: function() {
       this.startClock(3);
-      this.socket.emit("LOAD:QUESTION", this.roomId);
+      this.socket.emit("LOAD:QUESTION", this.roomId);      
+    },
+    showQuestion: function() {
       this.socket.on("SHOW:QUESTIONS", (data) => {
         console.log("questions_data", data);
         this.$refs.question.innerText = this.decodeHtmlCharCodes(data.question);
