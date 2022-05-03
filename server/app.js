@@ -83,13 +83,9 @@ io.on('connection', function (socket) {
     socket.on("LOAD:QUESTION", (roomId) => {
         socket.join(roomId); // CAN CAUSE TROUBLE
         loadQuestion().then((resp, err) => {
-            console.log("socket.rooms : ", socket.rooms)
-            console.log("roomId : ", roomId)
             if(resp) {
-                console.log("load question ok")
                 io.to(roomId).emit("SHOW:QUESTIONS", (resp));
             } else {
-                console.log("load question nok")
                 console.log(err);
             }
         })   
@@ -131,5 +127,6 @@ async function showQuestion(data){
     let incorrectAnswer = data.incorrect_answers;
     let optionsList = incorrectAnswer;
     optionsList.splice(Math.floor(Math.random() * (incorrectAnswer.length +1 )), 0, correctAnswer);
-    return {"category" : data.category, "difficulty" : data.difficulty, "question" : data.question, "options" : optionsList}
+    return {"category" : data.category, "difficulty" : data.difficulty, "question" : data.question, "options" : optionsList, "correct" : correctAnswer}
+    // CHEAT POSSIBLE: CAN BE SHOWN CLIENT SIDE
 }

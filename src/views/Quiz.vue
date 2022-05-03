@@ -35,6 +35,7 @@ export default {
       roomId: "",
       players: [],
       answers: [],
+      answer: '',
       radios: '',
     };
   },
@@ -62,14 +63,19 @@ export default {
         if(i == countdownSecond + 1) {
           console.log("time's up !")
           clearInterval(timer)
-          context.sendAnswer()
+          context.checkAnswer()
         }
       }, 1000);
     },
-    sendAnswer: function() {
+    checkAnswer: function() {
       const answer = this.radios
       console.log("answer:", answer)
-      this.socket.emit("SEND:ANSWER", answer)
+      console.log("this.answer:", this.answer)
+      if(answer == this.answer) {
+        console.log('Well done !')
+      } else {
+        console.log('Wrong, wrong, wrong !')
+      }
     },
     loadQuestion: function () {
       this.socket.emit("LOAD:QUESTION", this.roomId);
@@ -78,6 +84,7 @@ export default {
         this.$refs.question.innerText = this.decodeHtmlCharCodes(data.question)
         this.answers = data.options;
         this.$refs.theme.innerText = data.category
+        this.answer = data.correct
         let difficulty = data.difficulty
         let color = ""
         console.log("difficulty:", difficulty)
