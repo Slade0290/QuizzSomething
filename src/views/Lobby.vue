@@ -18,7 +18,7 @@
         </div>
         <div v-if="!player.username" class="create-room-region box">
           <div>CREER UN SALON PRIVE</div>
-          <button v-on:click="createRoom" class="create-room">GO</button>
+          <button v-on:click="createRoom" class="lets-go-btn">GO</button>
         </div>
         <div v-if="!player.roomId" class="rooms-list-region box">
           <div>LISTE DES SALONS</div>
@@ -36,7 +36,7 @@
               {{ player.username }}
             </li>
           </ul>
-          <button v-if="player.host" v-on:click="start">Start</button>
+          <button v-if="player.host" v-on:click="start" class="lets-go-btn">GO</button>
         </div>
         <div ref="warning" class="warning">
           Ajoute ton pseudo !
@@ -200,7 +200,7 @@ $mainBackground: rgba(131, 128, 182, 1);
   .answer {
     font-size: 1.5em;
   }
-  .create-room {
+  .lets-go-btn {
     font-family: "Organic Relief";
     color: white;
     margin: 4rem;
