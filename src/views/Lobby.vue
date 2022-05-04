@@ -3,7 +3,7 @@
     <h1 class="title">OLYMPIE</h1>
     <section class="sub-section">
       <h2 class="subtitle">QUIZ</h2>
-      <div class="container">
+      <div class="container" ref="container">
         <div v-if="!player.username" class="username-input-region box">
           <div class="box-inner">
             <label for="username" class="question">PSEUDO</label>
@@ -81,6 +81,7 @@ export default {
     createRoom: function () {
       this.setPlayer()
       if(this.playerHasName()) {
+        this.$refs.container.style.gap = 0
         this.player.host = true;
         this.socket.emit("CREATE:ROOM", this.player);
         this.socket.on("ROOM:CREATED", (roomId) => {
@@ -92,6 +93,7 @@ export default {
     join: function (roomId) {
       this.setPlayer()
       if(this.playerHasName()) {
+        this.$refs.container.style.gap = 0
         this.player.roomId = roomId
         this.socket.emit("JOIN:ROOM", this.player, roomId)
         this.playerList()
@@ -154,8 +156,7 @@ $mainBackground: rgba(131, 128, 182, 1);
     padding: 2rem;
     box-shadow: .15rem .15rem .1rem .05rem rgba(0,0,0,0.3);
     border-radius: 1rem;
-    min-width: 50vw;
-    min-height: 60vh;
+    max-height: 60vh;
     margin: 2rem;
   }
   button {
@@ -192,7 +193,6 @@ $mainBackground: rgba(131, 128, 182, 1);
   }
   .subtitle {
     font-size: 2em;
-    padding: 1rem;
   }
   .answer {
     font-size: 1.5em;
@@ -225,11 +225,12 @@ $mainBackground: rgba(131, 128, 182, 1);
     border: 1px solid black;
     text-align: center;
     padding: 1rem;
+    .player-name {
+      text-transform: uppercase;
+    }
   }
   .box-inner {
-    padding: 40px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     gap: 1rem;
   }
@@ -254,6 +255,12 @@ $mainBackground: rgba(131, 128, 182, 1);
           font-family: "Organic Relief";
           text-transform: uppercase;
           font-size: .5rem;
+          cursor: pointer;
+          transition: .5s;
+          border-radius: 5px;
+          &:hover {
+            background: #4aa571;
+          }
         }
       }
     }
