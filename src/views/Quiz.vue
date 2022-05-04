@@ -91,7 +91,7 @@ export default {
         if(this.$refs['answer'+i][0].innerText.toLowerCase() === answer.toLowerCase()) {
           if(!goodAnswer) {
             this.$refs['answer'+i][0].style.background = 'red'
-          }
+          } 
         }
         if(this.$refs['answer'+i][0].innerText.toLowerCase() === this.answer.toLowerCase()) {
           this.$refs['answer'+i][0].style.background = '#17db31'
