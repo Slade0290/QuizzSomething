@@ -194,9 +194,6 @@ $mainBackground: rgba(131, 128, 182, 1);
     font-size: 2em;
     padding: 1rem;
   }
-  .question {
-    // font-size: 1.5em;
-  }
   .answer {
     font-size: 1.5em;
   }
