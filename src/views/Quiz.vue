@@ -43,6 +43,7 @@ export default {
       answers: [],
       answer: "",
       radios: "",
+      difficulty: "",
       score: 0,
       nbQuestions: 0,
     };
@@ -76,7 +77,15 @@ export default {
     checkAnswer: function() {
       const answer = this.radios
       const goodAnswer = (answer === this.answer)
-      if(goodAnswer) this.score++;
+      if(goodAnswer){
+        if(this.difficulty == "easy"){
+          this.score++;
+        }else if (this.difficulty == "medium"){
+          this.score+=3;
+        }else{
+           this.score+=5;
+        }
+      } 
       // UGLY
       for(let i = 0; i < this.answers.length; i++) {
         if(this.$refs['answer'+i][0].innerText.toLowerCase() === answer.toLowerCase()) {
@@ -106,7 +115,7 @@ export default {
         this.answers = data.options;
         this.$refs.theme.innerText = data.category;
         this.answer = data.correct;
-        let difficulty = data.difficulty;
+        let difficulty = this.difficulty = data.difficulty;
         let color = "";
         console.log("difficulty:", difficulty);
         if (difficulty === "easy") {
