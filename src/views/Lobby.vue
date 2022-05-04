@@ -18,7 +18,7 @@
         </div>
         <div v-if="!player.username" class="create-room-region box">
           <div>CREER UN SALON PRIVE</div>
-          <button v-on:click="submit" class="create-room">GO</button>
+          <button v-on:click="createRoom" class="create-room">GO</button>
         </div>
         <div v-if="!player.roomId" class="rooms-list-region box">
           <div>LISTE DES SALONS</div>
@@ -38,6 +38,9 @@
           </ul>
           <button v-if="player.host" v-on:click="start">Start</button>
         </div>
+        <div ref="warning" class="warning">
+          Ajoute ton pseudo !
+        </div>
       </div>
     </section>
   </section>
@@ -45,7 +48,6 @@
 
 <script>
 import io from "socket.io-client";
-import Cookies from 'js-cookie';
 
 export default {
   data() {
@@ -54,7 +56,6 @@ export default {
         host: false,
         roomId: null,
         username: "",
-        cookieId: "",
         socketId: "",
         win: false,
       },
@@ -64,12 +65,6 @@ export default {
     };
   },
   mounted() {
-    this.socket.on('connect', () => {
-      if(!Cookies.get('Olympie')) {
-        Cookies.set('Olympie', this.socket.id)
-      }
-    })
-
     this.roomList();
     this.socket.on("LIST:PLAYERS", (players) => {
       this.players = players;
@@ -77,51 +72,59 @@ export default {
     this.socket.on("PLAY:QUIZ", (player) => {
       this.$router.push({ name: 'quiz', params: { 'roomId' : player.roomId } });
     });
+    this.player.socketId = this.socket.id
   },
   updated() {
     this.roomList();
   },
   methods: {
-    submit: function (event) {
-      this.playerData();
-      this.player.host = true;
-      this.socket.emit("CREATE:ROOM", this.player);
-      this.socket.on("ROOM:CREATED", (roomId) => {
-        this.player.roomId = roomId;
-        this.players.push(this.player);
-      });
-    },
-    start: function (event) {
-      Cookies.set('player.roomId', this.player.roomId)
-      Cookies.set('player.socketId', this.player.socketId)
-      Cookies.set('player.username', this.player.username)
-      this.socket.emit("START:QUIZ", this.player);
+    createRoom: function () {
+      this.setPlayer()
+      if(this.playerHasName()) {
+        this.player.host = true;
+        this.socket.emit("CREATE:ROOM", this.player);
+        this.socket.on("ROOM:CREATED", (roomId) => {
+          this.player.roomId = roomId;
+          this.players.push(this.player);
+        });
+      }
     },
     join: function (roomId) {
-      this.playerData();
-      this.player.roomId = roomId;
-      this.socket.emit("JOIN:ROOM", this.player, roomId);
-      this.playerList();
-      console.log("this.player.socketId : ", this.player.socketId)
+      this.setPlayer()
+      if(this.playerHasName()) {
+        this.player.roomId = roomId
+        this.socket.emit("JOIN:ROOM", this.player, roomId)
+        this.playerList()
+      }
     },
-    roomList: function (event) {
+    roomList: function () {
       this.socket.emit("GET:ROOMS");
       this.socket.on("LIST:ROOMS", (rooms) => {
         this.rooms = rooms;
       });
     },
-    playerList: function (event) {
-      console.log("In Player List");
-      console.log(this.player);
+    playerList: function () {
       this.socket.emit("GET:PLAYERS", this.player.roomId);
       this.socket.on("LIST:PLAYERS", (players) => {
         this.players = players;
       });
     },
-    playerData: function (event) {
-      this.player.username = this.$refs.username.value;
-      this.player.cookieId = Cookies.get('value');
-      this.player.socketId = this.socket.id
+    playerHasName: function() {
+      if(this.$refs.username.value === '') {
+        console.log('no name')
+        this.$refs.warning.style.right = '1rem'
+        setTimeout(() => {
+          this.$refs.warning.style.right = '-25rem'
+        }, 3000)
+        return false
+      }
+      return true
+    },
+    setPlayer: function () {
+      this.player.username = this.$refs.username.value
+    },
+    start: function () {
+      this.socket.emit("START:QUIZ", this.player);
     },
   },
 };
@@ -141,6 +144,7 @@ $mainBackground: rgba(131, 128, 182, 1);
     justify-content: center;
     align-items: center;
     color: rgba(17, 29, 74, 1);
+    overflow-x: hidden;
   }
   
   .sub-section {
@@ -166,6 +170,17 @@ $mainBackground: rgba(131, 128, 182, 1);
     grid-template-columns: 1fr 1fr;
     column-gap: .5rem;
     row-gap: .5rem;
+    .warning {
+      text-transform: uppercase;
+      background: lightcoral;
+      padding: 2rem;
+      position: absolute;
+      right: -25rem;
+      bottom: 1rem;
+      color: white;
+      border-left: red solid 1rem;
+      transition: 1s;
+    }
   }
   .title {
     text-align: center;
