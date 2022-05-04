@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "webpack --mode production",
+    "build": "vue-cli-service build",
+    "build-wbp": "webpack --mode production",
     "start": "webpack-dev-server --mode development"
   },
   "dependencies": {
@@ -12,7 +13,7 @@
     "firebase": "^9.7.0",
     "js-cookie": "^3.0.1",
     "socket.io-client": "^2.1.0",
-    "vue": "^2.5.13",
+    "vue": "^3.2.31",
     "vue-router": "^3.5.3"
   },
   "devDependencies": {
@@ -20,11 +21,11 @@
     "@babel/preset-env": "^7.16.11",
     "@vue/cli-plugin-babel": "~5.0.4",
     "@vue/cli-service": "~5.0.4",
+    "@vue/compiler-sfc": "^3.2.33",
     "babel-loader": "^8.2.5",
     "node-sass": "^7.0.1",
     "sass-loader": "^12.6.0",
     "vue-loader": "^17.0.0",
-    "vue-template-compiler": "^2.6.14",
     "webpack": "^5.72.0",
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.8.1"
