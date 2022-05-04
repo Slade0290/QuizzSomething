@@ -24,7 +24,7 @@
           <div>LISTE DES SALONS</div>
           <ul>
             <li v-for="room in rooms" :key="room.id">
-              {{ room.id }}
+              <span>{{ room.id }}</span>
               <button v-on:click="join(room.id)">Join</button>
             </li>
           </ul>
@@ -111,7 +111,6 @@ export default {
     },
     playerHasName: function() {
       if(this.$refs.username.value === '') {
-        console.log('no name')
         this.$refs.warning.style.right = '1rem'
         setTimeout(() => {
           this.$refs.warning.style.right = '-25rem'
@@ -246,6 +245,21 @@ $mainBackground: rgba(131, 128, 182, 1);
   }
   .rooms-list-region {
     grid-area: list;
+    ul {
+      li {
+        display: flex;
+        justify-content: space-between;
+        text-transform: uppercase;
+        padding: .1rem;
+        button {
+          background: #56d18b;
+          color: white;
+          font-family: "Organic Relief";
+          text-transform: uppercase;
+          font-size: .5rem;
+        }
+      }
+    }
   }
   .create-room-region {
     grid-area: create;
