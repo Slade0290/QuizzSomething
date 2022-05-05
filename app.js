@@ -2,11 +2,18 @@
 import express from 'express';
 import fetch from 'node-fetch';
 import Socket from 'socket.io';
-import cors from 'cors'
+import cors from 'cors';
+import functions from 'firebase-functions';
 
 const app = express();
 
 app.use(cors())
+
+app.get('/', (request, response) => {
+  response.send(`${Date.now()}`);
+});
+
+exports.app = functions.https.onRequest(app);
 
 const server = app.listen(3001, function () {
     console.log('server running on port 3001');
