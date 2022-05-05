@@ -1,9 +1,9 @@
 
-import express from 'express';
-import fetch from 'node-fetch';
-import Socket from 'socket.io';
-import cors from 'cors';
-import functions from 'firebase-functions';
+const express = require('express')
+// const fetch = require('node-fetch')
+const Socket = require('socket.io')
+const cors = require('cors')
+const functions = require('firebase-functions')
 
 const app = express();
 
