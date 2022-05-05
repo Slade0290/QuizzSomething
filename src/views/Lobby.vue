@@ -37,6 +37,7 @@
             </li>
           </ul>
           <button v-if="player.host" v-on:click="start" class="lets-go-btn">GO</button>
+          <div class="roomId">ID : {{player.roomId}}</div>
         </div>
         <div ref="warning" class="warning">
           Ajoute ton pseudo !
@@ -239,6 +240,9 @@ $mainBackground: rgba(131, 128, 182, 1);
     ul {
       list-style: none;
       padding: 0;
+    }
+    .roomId {
+      text-transform: uppercase;
     }
   }
   .rooms-list-region {
