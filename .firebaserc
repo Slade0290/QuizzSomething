@@ -1,6 +1,5 @@
 {
   "projects": {
-    "default": "olympie-b3f31",
     "OlympieBack": "olympie-b3f31"
   },
   "targets": {}

@@ -1,38 +1,21 @@
 {
-  "name": "olympie",
-  "version": "0.1.0",
-  "private": true,
+  "name": "server",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build-wbp": "webpack --mode production",
-    "start": "webpack-dev-server --mode development"
+    "start": "nodemon app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.17.3"
   },
   "dependencies": {
-    "@vue/cli-service": "~5.0.4",
-    "@vue/compat": "^3.1.0-0",
-    "core-js": "^3.8.3",
-    "firebase": "^9.7.0",
-    "node-sass": "^7.0.1",
-    "sass-loader": "^12.6.0",
-    "socket.io-client": "^2.1.0",
-    "vue": "^3.2.31",
-    "vue-loader": "^17.0.0",
-    "vue-router": "^4.0.13"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.17.9",
-    "@babel/preset-env": "^7.16.11",
-    "@vue/cli-plugin-babel": "~5.0.4",
-    "@vue/compiler-sfc": "^3.2.33",
-    "babel-loader": "^8.2.5",
-    "webpack": "^5.72.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.8.1"
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "cors": "^2.8.5",
+    "express": "^4.16.3",
+    "node-fetch": "^3.2.3",
+    "socket.io": "^2.1.0"
+  }
 }
