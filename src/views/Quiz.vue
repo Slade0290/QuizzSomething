@@ -49,7 +49,6 @@ export default {
     };
   },
   mounted() {
-    console.log("play");
     this.roomId = this.$route.params.roomId;
     this.showQuestion();
     this.loadQuestion();
@@ -110,14 +109,12 @@ export default {
     },
     showQuestion: function() {
       this.socket.on("SHOW:QUESTIONS", (data) => {
-        console.log("questions_data", data);
         this.$refs.question.innerText = this.decodeHtmlCharCodes(data.question);
         this.answers = data.options;
         this.$refs.theme.innerText = data.category;
         this.answer = data.correct;
         let difficulty = this.difficulty = data.difficulty;
         let color = "";
-        console.log("difficulty:", difficulty);
         if (difficulty === "easy") {
           color = "green";
         } else if (difficulty === "hard") {

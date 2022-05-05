@@ -1,23 +1,23 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import { createWebHistory, createRouter } from "vue-router";
 import Lobby from './views/Lobby.vue'
 import Quiz from './views/Quiz.vue'
 
-Vue.use(Router)
+const routes = [
+  {
+    path: '/',
+    name: 'lobby',
+    component: Lobby
+  },
+  {
+    path: '/quiz/:roomId',
+    name: 'quiz',
+    component: Quiz
+  },
+];
 
-export default new Router({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes: [
-    {
-      path: '/',
-      name: 'lobby',
-      component: Lobby
-    },
-    {
-      path: '/quiz/:roomId',
-      name: 'quiz',
-      component: Quiz
-    }
-  ]
-})
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+});
+
+export default router;
