@@ -17,6 +17,7 @@ exports.app = functions.https.onRequest(app);
 
 const server = app.listen(3001, function () {
     console.log('server running on port 3001');
+    console.log('Yeah !');
 });
 
 const io = new Socket(server)
