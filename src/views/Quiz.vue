@@ -37,7 +37,7 @@ export default {
         socketId: "",
         win: false,
       },
-      socket: io("localhost:3001"),
+      socket: io("https://olympie-b3f31.web.app:3001"),
       roomId: "",
       players: [],
       answers: [],
