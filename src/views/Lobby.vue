@@ -60,7 +60,7 @@ export default {
         socketId: "",
         win: false,
       },
-      socket: io("https://olympie-b3f31.web.app:3001"),
+      socket: io("locahost:3001"),
       rooms: [],
       players: [],
     };
