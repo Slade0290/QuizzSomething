@@ -37,7 +37,7 @@ export default {
         socketId: "",
         win: false,
       },
-      socket: io("locahost:3001"),
+      socket: io("/socket:3001"),
       roomId: "",
       players: [],
       answers: [],

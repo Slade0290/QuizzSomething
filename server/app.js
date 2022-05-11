@@ -1,18 +1,19 @@
 
 import express from 'express';
 import fetch from 'node-fetch';
-import Socket from 'socket.io';
+import socketIO from 'socket.io';
+import cors from 'cors'
 
 const app = express();
+app.use(cors())
 
 const server = app.listen(3001, function () {
     console.log('server running on port 3001');
 });
 
-const io = new Socket(server)
+const io = socketIO(server)
 
 let rooms = [];
-
 
 io.on('connection', function (socket) {
 
