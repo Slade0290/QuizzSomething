@@ -2,19 +2,20 @@ import express from 'express';
 import fetch from 'node-fetch';
 import socketIO from 'socket.io';
 import cors from 'cors'
+import http from 'http'
 
 const app = express();
 app.use(cors())
+let server = http.Server(app)
+const io = socketIO(server)
 
-const server = app.listen(3001, function () {
+server.listen(3001, function () {
     console.log('server running on port 3001');
 });
 
-const io = socketIO(server)
-
 let rooms = [];
 
-io.on('connection', function (socket) {
+io.sockets.on('connection', function (socket) {
 
     console.log('connection', socket.id)
     socket.on('CREATE:ROOM', (player) => {
