@@ -1,11 +1,12 @@
 {
   "name": "server",
-  "type": "commonjs",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,8 +16,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.16.3",
-    "firebase": "^9.7.0",
-    "firebase-functions": "^3.20.1",
     "node-fetch": "^3.2.3",
     "socket.io": "^2.1.0"
   }
