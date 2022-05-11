@@ -1,29 +1,18 @@
-
-const express = require('express')
-// const fetch = require('node-fetch')
-const Socket = require('socket.io')
-const cors = require('cors')
-const functions = require('firebase-functions')
+import express from 'express';
+import fetch from 'node-fetch';
+import socketIO from 'socket.io';
+import cors from 'cors'
 
 const app = express();
-
 app.use(cors())
-
-app.get('/', (request, response) => {
-  response.send(`${Date.now()}`);
-});
-
-exports.app = functions.https.onRequest(app);
 
 const server = app.listen(3001, function () {
     console.log('server running on port 3001');
-    console.log('Yeah !');
 });
 
-const io = new Socket(server)
+const io = socketIO(server)
 
 let rooms = [];
-
 
 io.on('connection', function (socket) {
 
