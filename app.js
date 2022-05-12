@@ -1,11 +1,11 @@
 import express from 'express';
 // import fetch from 'node-fetch';
 import socketIO from 'socket.io';
-// import cors from 'cors'
+import cors from 'cors'
 import http from 'http'
 
 const app = express();
-// app.use(cors())
+app.use(cors())
 let server = http.Server(app)
 const io = socketIO(server)
 
