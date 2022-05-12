@@ -37,7 +37,7 @@ export default {
         socketId: "",
         win: false,
       },
-      socket: io({path:'/socket:3001'}),
+      socket: io({path:'/socket:3000'}),
       roomId: "",
       players: [],
       answers: [],
