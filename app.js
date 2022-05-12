@@ -1,11 +1,11 @@
 import express from 'express';
-// import fetch from 'node-fetch';
+import fetch from 'node-fetch';
 import socketIO from 'socket.io';
-import cors from 'cors'
+// import cors from 'cors'
 import http from 'http'
 
 const app = express();
-app.use(cors())
+// app.use(cors())
 let server = http.Server(app)
 const io = socketIO(server)
 
@@ -83,13 +83,13 @@ io.sockets.on('connection', function (socket) {
     // LOAD QUESTION 
     socket.on("LOAD:QUESTION", (roomId) => {
         socket.join(roomId); // CAN CAUSE TROUBLE
-        // loadQuestion().then((resp, err) => {
-        //     if(resp) {
-        //         io.to(roomId).emit("SHOW:QUESTIONS", (resp));
-        //     } else {
-        //         console.log(err);
-        //     }
-        // })   
+        loadQuestion().then((resp, err) => {
+            if(resp) {
+                io.to(roomId).emit("SHOW:QUESTIONS", (resp));
+            } else {
+                console.log(err);
+            }
+        })   
     })
 
     // SEND ANSWER
@@ -118,9 +118,9 @@ function getRoomById(roomId) {
 
 async function loadQuestion() {
     const APIUrl = 'https://opentdb.com/api.php?amount=1'
-    // const result = await fetch(`${APIUrl}`)
-    // const data = await result.json();
-    // return await showQuestion(data.results[0]);
+    const result = await fetch(`${APIUrl}`)
+    const data = await result.json();
+    return await showQuestion(data.results[0]);
 }
 
 async function showQuestion(data){
