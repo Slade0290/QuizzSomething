@@ -60,7 +60,7 @@ export default {
         socketId: "",
         win: false,
       },
-      socket: io({path:'/socket:3000'}),
+      socket: io({path:'/socket'}),
       rooms: [],
       players: [],
     };
